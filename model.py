@@ -14,18 +14,20 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    first_name = db.Column(db.String(30), nullable=False)
-    last_name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(64), nullable=False)
+    full_name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(15), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(30), nullable=False)
     age = db.Column(db.Integer, nullable=True)
-    zipcode = db.Column(db.String(15), nullable=True)
+    city = db.Column(db.String(30), nullable=False)
+    zipcode = db.Column(db.String(15), nullable=False)
+    user_bio = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s first_name=%s last_name=%s email=%s>" % (self.user_id,
-            self.first_name, self.last_name, self.email)
+        return "<User user_id=%s full_name=%s username=%s>" % (self.user_id,
+            self.full_name, self.username, self.city)
 
 
 class Language(db.Model):
@@ -50,8 +52,22 @@ class Userlang(db.Model):
     userlang_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     lang_id = db.Column(db.Integer, db.ForeignKey('languages.lang_id'))
-    fluent = db.Column(db.String(15))
+    fluent = db.Column(db.Boolean)
 
+    user = db.relationship("User", 
+                            backref=db.backref("userlangs", order_by=userlang_id))
+
+    language = db.relationship("Language", 
+                                backref=db.backref("userlangs", order_by=userlang_id))
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id, 
+            self.user_id, self.lang_id, self.fluent)
+
+        #ask about boolean value in the repr
 
 
 
@@ -68,7 +84,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///____________'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///userlangs'
     #
     #ADD DATABASE NAME HERE ^
     #

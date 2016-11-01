@@ -1,17 +1,16 @@
-user_id,first_name,last_name,email,password,age,zipcode
-1,Jean,Bell,jbell0@tumblr.com,IjBYd2Wz,79,94123
-2,Kenneth,Bowman,kbowman1@ted.com,8s7mguhjUU,25,94115
-3,Douglas,Andrews,dandrews2@uol.com.br,wPryD5lx,45,94131
-4,Judith,Hunter,jhunter3@bloglines.com,fTkCzf5W,38,
-5,Lillian,Lee,llee4@qq.com,WLhYaJuf4iwq,44,
-6,Beverly,Spencer,bspencer5@qq.com,BhOX74sUH,31,
-7,Ryan,Miller,rmiller6@seattletimes.com,ipkxtb,92,
-8,Rebecca,Washington,rwashington7@furl.net,v9hBnXNj4B1D,65,94707
-9,Peter,Foster,pfoster8@gizmodo.com,0qoqcAnRpQw,59,
-10,Jerry,Little,jlittle9@1688.com,2Qy7V2wG,31,94601
-11,Arthur,Bishop,abishopa@digg.com,QKDES7,36,
-12,Jacqueline,Rivera,jriverab@booking.com,I8XhxS,19,94701
-13,Annie,Hart,ahartc@wordpress.org,jgH0ee2,54,94613
-14,Joseph,Reid,jreidd@census.gov,ahSul4,26,
-15,Joseph,George,jgeorgee@lulu.com,egkE07tnW,64,
-
+user_id,full_name,username,email,password,age,city,zipcode,user_bio
+1,Roy Harrison,rharrison0,rharrison0@php.net,Ue7gv66R8,50,Slovenski Javornik,,
+2,Terry Ward,tward1,tward1@slate.com,jb5GijJWl,31,Lidingö,181 72,
+3,Sandra Washington,swashington2,swashington2@virginia.edu,2txawoCg1,53,Gaohe,,
+4,Henry Larson,hlarson3,hlarson3@paginegialle.it,AK0bnfb,20,Dayeuhluhur,,
+5,Christopher White,cwhite4,cwhite4@moonfruit.com,FFbFrkv9H9me,58,Mbandaka,,
+6,Sean Weaver,sweaver5,sweaver5@vistaprint.com,9Xy9YKh,44,Kobylanka,,
+7,Maria Ray,mray6,mray6@whitehouse.gov,oyzLRi,25,Murree,,
+8,Sara Hunt,shunt7,shunt7@naver.com,NLWoydbe5RAj,32,Jermenovci,,
+9,Annie Stone,astone8,astone8@sbwire.com,1NMYSQF1C,58,Dongjin,,
+10,Sharon Moore,smoore9,smoore9@washingtonpost.com,keNc9haMHCDb,55,Hua Sai,,
+11,Jerry Little,jlittlea,jlittlea@intel.com,hzWFJb,58,Wakimachi,,
+12,Jessica Stephens,jstephensb,jstephensb@issuu.com,3ReFDFq,19,San Jerónimo,,
+13,Antonio Kelly,akellyc,akellyc@photobucket.com,vomarsS,52,Kruty,,
+14,Larry Gonzalez,lgonzalezd,lgonzalezd@linkedin.com,9qqJOu,60,Cardona,,
+15,Bruce Kelly,bkellye,bkellye@symantec.com,T3XTFw8h,30,Nässjö,57192,

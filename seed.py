@@ -1,9 +1,11 @@
 """Utility file to seed users and language tables from seed_data/"""
 from sqlalchemy import func
 
-from model import #classes from model.
+from model import User, Language, Userlang
 from server import app
 
+def load_users():
+    """Load users from users.csv into database."""
 
 
 
