@@ -1,8 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
 
-
-
 db = SQLAlchemy()
 
 ##############################################################################
@@ -26,8 +24,7 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s full_name=%s username=%s>" % (self.user_id,
-            self.full_name, self.username, self.city)
+        return "<User user_id=%s full_name=%s username=%s>" % (self.user_id, self.full_name, self.username, self.city)
 
 
 class Language(db.Model):
@@ -54,17 +51,17 @@ class Userlang(db.Model):
     lang_id = db.Column(db.Integer, db.ForeignKey('languages.lang_id'))
     fluent = db.Column(db.Boolean)
 
-    user = db.relationship("User", 
+    user = db.relationship("User",
                             backref=db.backref("userlangs", order_by=userlang_id))
 
-    language = db.relationship("Language", 
+    language = db.relationship("Language",
                                 backref=db.backref("userlangs", order_by=userlang_id))
 
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id, 
+        return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id,
             self.user_id, self.lang_id, self.fluent)
 
         #ask about boolean value in the repr
