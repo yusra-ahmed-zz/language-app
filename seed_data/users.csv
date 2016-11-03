@@ -1,4 +1,4 @@
-user_id,full_name,username,email,password,age,city,zipcode,user_bio
+ user_id,full_name,username,email,password,age,city,zipcode,user_bio
 1,Roy Harrison,rharrison0,rharrison0@php.net,Ue7gv66R8,50,Slovenski Javornik,,
 2,Terry Ward,tward1,tward1@slate.com,jb5GijJWl,31,Lidingö,181 72,
 3,Sandra Washington,swashington2,swashington2@virginia.edu,2txawoCg1,53,Gaohe,,

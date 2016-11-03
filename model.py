@@ -13,7 +13,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     full_name = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(15), nullable=False)
+    username = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(30), nullable=False)
     age = db.Column(db.Integer, nullable=True)
@@ -24,7 +24,7 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s full_name=%s username=%s>" % (self.user_id, self.full_name, self.username, self.city)
+        return "<User user_id=%s full_name=%s username=%s>" % (self.user_id, self.full_name, self.username)
 
 
 class Language(db.Model):
