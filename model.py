@@ -33,7 +33,7 @@ class Language(db.Model):
     __tablename__ = "languages"
 
     lang_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    lang_name = db.Column(db.String(15), nullable=False)
+    lang_name = db.Column(db.String(50), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -82,9 +82,8 @@ def connect_to_db(app):
 
     # Configure to use our PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///userlangs'
-    #
-    #ADD DATABASE NAME HERE ^
-    #
+ 
+    
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
