@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My APP</title>
+  <!-- Need to come up with witty app name!!!!!! -->
+</head>
+
+<a href="/">Home</a>
+
+{% if "user_id" in session %}
+    <a href="/logout">Log Out</a>
+{% else %}
+    <a href="/login">Log In</a>
+    <a href="/signup">Sign Up</a>
+{% endif %}
+
+<body>
+  
+  <hr>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %} put your content here {% endblock %}
+
+</body>
+</html>
