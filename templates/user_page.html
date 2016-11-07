@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- User name, location, map, photo, bio, option to send email
+ -->
+
+ <a data-toggle="modal" data-target="#send_email">Send Message</a>
+ 
+ <div class="modal fade" id="send_email" tabindex="-1" role="dialog" aria-labelledby="user_label">
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header overlay">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title" id="user_label">Send a message to {{ user.full_name }}</h3>
+        </div>
+
+
+
+
+{% endblock %}

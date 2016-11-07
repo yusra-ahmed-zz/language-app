@@ -1,7 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>My App</h1>
+<h1>Babilim</h1>
 <p>Some tagline, or slogan, or discription about my app</p>
+
+<div class="well spaced" style="width:40%;">
+<div>
+    <h3>Login</h3>
+    <form action='/' method="POST">
+
+        <div class="form-group">
+            <label>Email:
+                <input type="email" name="email" required class="form-control">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>Password:
+                <input type="password" name="password" required class="form-control">
+            </label>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Log In" class="btn btn-danger">
+        </div>
+
+    </form>
+</div>
+
+<h5>Don't Have an Account? <br><a href="/signup">Sign Up Today!</a></h5>
 
 {% endblock %}

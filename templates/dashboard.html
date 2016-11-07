@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!-- The dashboard will provide users access to their profile page?
 A way to filter:
 First choice to make: language user wants to learn
@@ -13,10 +15,14 @@ In 2.0 - An access area to chat with people. -->
     <title>Search Partners</title>
 </head>
 <body>
+    <h1>Welcome {{ user.full_name }}</h1>
     <h2>Search for a Language Partner</h2>
-    <p>A description on how to filter for a the right user</p>
+    <p>Find your partner by selecting your languages and city.</p>
+
+
+
 
 </body>
 </html>
 
-
+{% endblock %}

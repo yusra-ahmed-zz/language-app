@@ -62,7 +62,7 @@ class Userlang(db.Model):
         """Provide helpful representation when printed."""
 
         return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id,
-            self.user_id, self.lang_id, self.fluent)
+                self.user_id, self.lang_id, self.fluent)
 
         #ask about boolean value in the repr
 
