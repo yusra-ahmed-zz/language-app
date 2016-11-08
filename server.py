@@ -1,7 +1,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, flash, redirect, session
+from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 # from flask_mail import Mail, Message
 
@@ -116,8 +116,22 @@ def user_dashboard():
 
     return render_template("dashboard.html", user=user, languages=languages)
 
+@app.route('/get_user.json')
+def get_users():
 
-@app.route('/<int:user_id>')
+
+    search = request.args.get("search")
+
+    users = User.query.filter(User.full_name.like('%'+search+'%')).all()
+ 
+    userinfo = {"users": []}
+
+    for user in users:
+        userlist = [user.user_id, user.full_name]
+        userinfo["users"].append(userlist)
+    return jsonify(userinfo)
+
+@app.route('/user/<int:user_id>')
 def show_user_page(user_id):
     """Show individual user's profile page"""
     # browsed = request.args.get('browsed')

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
 {% block content %}
 <!-- The dashboard will provide users access to their profile page?
 A way to filter:
@@ -10,19 +13,45 @@ First choice to make: language user wants to learn
 In 2.0 - Access to their list of people favorited?
 In 2.0 - An access area to chat with people. -->
 
-<html>
-<head>
-    <title>Search Partners</title>
-</head>
-<body>
+
     <h1>Welcome {{ user.full_name }}</h1>
     <h2>Search for a Language Partner</h2>
     <p>Find your partner by selecting your languages and city.</p>
 
+    <input type="search" name="search" id="search" value="" />
+    <button id="button">Search People</button>
+    <div id="placeholder"></div>
+
+    <script>
+    
+    // $(data.users).each(function () {
+    //     var output = "<ul><li>" + this.full_name + "</li></ul>";
+    //     $('#placeholder').append(output);
+    // });
+
+    function showUser(result) {
+        console.log(result['users'][0]);
+
+        for (var i = 0; i < result['users'].length; i++){
+            new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
+            console.log(new_user);
+            $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+        }
+    }
+
+    function getPeople(evt) {
+       var data = {
+        "search": $('#search').val()
+        };
+        $.get('/get_user.json', data, showUser);
+    }
+
+    $("#button").on('click', getPeople);
 
 
+   
 
-</body>
-</html>
+
+    </script>
 
 {% endblock %}
