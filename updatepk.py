@@ -29,6 +29,18 @@ def set_val_lang_id():
     db.session.execute(query, {'new_id': max_id})
     db.session.commit()
 
+def set_val_userlang_id():
+    """Set value for the next userlang_id after seeding database"""
+
+    # Get the Max lang_id in the database
+    result = db.session.query(func.max(Userlang.userlang_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next lang_id to be lang_id + 1
+    query = "SELECT setval('userlangs_userlang_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id})
+    db.session.commit()
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
@@ -37,4 +49,5 @@ if __name__ == "__main__":
     connect_to_db(app)
     set_val_user_id()
     set_val_lang_id()
+    set_val_userlang_id()
     print "connect_to_db"

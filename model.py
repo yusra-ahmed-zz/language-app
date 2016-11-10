@@ -3,10 +3,29 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class ToDictMixin(object):
+    """Provides a method to return a dictionary version of a model class."""
+
+    def to_dict(self):
+        """Returns a dictionary representing the object"""
+
+        dict_of_obj = {}
+
+        #iterate through the table's columns, adding the value in each
+        #to the dictionary
+        for column_name in self.__mapper__.column_attrs.keys():
+            value = getattr(self, column_name, None)
+            dict_of_obj[column_name] = value
+
+        #return the completed dictionary
+        return dict_of_obj
+
+
+
 ##############################################################################
 # Model definitions
 
-class User(db.Model):
+class User(db.Model, ToDictMixin):
     """User of language-buddy app"""
 
     __tablename__ = "users"
@@ -14,12 +33,18 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     full_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
     age = db.Column(db.Integer, nullable=True)
     city = db.Column(db.String(30), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
     user_bio = db.Column(db.String(300), nullable=True)
+
+    fluent_join = "and_(User.user_id==Userlang.user_id, Userlang.fluent==True)"
+    practice_join = "and_(User.user_id==Userlang.user_id, Userlang.fluent==False)"
+
+    fluent_userlangs = db.relationship("Userlang", primaryjoin=fluent_join)
+    practice_userlangs = db.relationship("Userlang", primaryjoin=practice_join)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -51,27 +76,15 @@ class Userlang(db.Model):
     lang_id = db.Column(db.Integer, db.ForeignKey('languages.lang_id'))
     fluent = db.Column(db.Boolean)
 
-    user = db.relationship("User",
-                            backref=db.backref("userlangs", order_by=userlang_id))
+    user = db.relationship("User")
+    #removed backref
 
-    language = db.relationship("Language",
-                                backref=db.backref("userlangs", order_by=userlang_id))
-
+    language = db.relationship("Language", backref=db.backref("userlangs", order_by=userlang_id))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id,
-                self.user_id, self.lang_id, self.fluent)
-
-        #ask about boolean value in the repr
-
-
-
-
-
-
-
+        return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id, self.user_id, self.lang_id, self.fluent)
 
 
 ##############################################################################
@@ -82,8 +95,6 @@ def connect_to_db(app):
 
     # Configure to use our PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///userlangs'
- 
-    
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)

@@ -91,17 +91,37 @@ def register_process():
 
     user = User.query.filter_by(email=email).first()
 
-    send_email(user)
+    # send_email(user)
 
     if user:
         flash("This email is already registered. Please login with your email and password.")
         return redirect("/")
     else:
         user = User(full_name=full_name, email=email, username=username,
-                    password=password, age=age, city=city, zipcode=zipcode, user_bio=user_bio)
+                    password=password, age=age, city=city, zipcode=zipcode,
+                    user_bio=user_bio)
         db.session.add(user)
         db.session.commit()
-        session['user_id'] = user.user_id
+
+
+
+        user_id = User.query.filter(User.email == email).one().user_id
+        print user_id
+        session['user_id'] = user_id
+
+        lang_learn = request.form.get("lang_learn")
+        lang_fluent = request.form.get("lang_fluent")
+        print "lang_learn", lang_learn
+        print "lang_fluent", lang_fluent
+
+        practice = Userlang(user_id=user_id, lang_id=lang_learn,
+                            fluent=False)
+        fluent = Userlang(user_id=user_id, lang_id=lang_fluent,
+                          fluent=True)
+        db.session.add(practice)
+        db.session.add(fluent)
+        db.session.commit()
+
         flash("Registration Successful. Welcome to Babilim!")
         return redirect("/dashboard")
 
@@ -123,13 +143,73 @@ def get_users():
     search = request.args.get("search")
 
     users = User.query.filter(User.full_name.like('%'+search+'%')).all()
- 
+
     userinfo = {"users": []}
 
     for user in users:
         userlist = [user.user_id, user.full_name]
         userinfo["users"].append(userlist)
+
     return jsonify(userinfo)
+
+
+@app.route('/find_matches.json')
+def find_matches():
+
+    user_id = session["user_id"]
+    print "user_id", user_id
+    user = User.query.filter(User.user_id == user_id).first()
+
+    prac_lang_id = int(request.args.get("lang_learn"))
+    print "practice", prac_lang_id
+
+    match_ids = set()
+
+    print "user.fluent_userlangs", user.fluent_userlangs
+
+    for fluent_userlang in user.fluent_userlangs:
+        fluent_lang_id = fluent_userlang.lang_id
+        print "fluentid", fluent_lang_id
+
+        people_want = db.session.query(User).join(Userlang).filter(Userlang.fluent.is_(False),
+                                   Userlang.lang_id == fluent_lang_id).all()
+
+        print "want", people_want
+        for person in people_want:
+            fluent_ids = [userlang.lang_id for userlang in person.fluent_userlangs]
+            print "fluentid", fluent_ids
+            if prac_lang_id in fluent_ids:
+                match_ids.add(person.user_id)
+        print "mathcs", match_ids
+
+        matches = db.session.query(User).filter(User.user_id.in_(match_ids)).all()
+
+        print "this match", matches
+
+    results = [user.to_dict() for user in matches]
+    print "results", results
+    return jsonify({"people": results})
+
+
+
+
+
+
+        # ppl_who_want_my_lang = (
+        #     Userlang.query.filter(Userlang.fluent is False,
+        #                           Userlang.lang_id == fluent_lang_id))
+        # ppl_who_also_speak_p_lang = (
+        #     ppl_who_want_my_lang.filter(Userlang.fluent is True,
+        #                                 Userlang.lang_id == prac_lang_id))
+        # matches = ppl_who_also_speak_p_lang.all()
+    #     print "matches", matches
+    #     all_userlang_matches.extend(matches)
+
+    # people = [userlang.user for userlang in all_userlang_matches]
+
+    # print "people", people
+    # return jsonify(people)
+
 
 @app.route('/user/<int:user_id>')
 def show_user_page(user_id):
@@ -148,16 +228,17 @@ def show_user_page(user_id):
     pass
     # personal_msg= request.form.get("personal_msg")
 
+
 def send_email(user, personal_msg):
     """Send email to user"""
 
     # personal_msg = personal_msg
     # 'html': '<p>' + personal_msg + '</p>',
     message = {'html': '<p> hero </p>',
-        'from_email': 'info@babilim.us',
-        'from_name': 'Babilim',
-        'subject': 'Message from Babilim user',
-        'to': [{'email': user.email}]
+                'from_email': 'info@babilim.us',
+                'from_name': 'Babilim',
+                'subject': 'Message from Babilim user',
+                'to': [{'email': user.email}]
     }
 
     result = mandrill_client.messages.send(message=message)

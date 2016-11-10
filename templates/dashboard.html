@@ -19,15 +19,11 @@ In 2.0 - An access area to chat with people. -->
     <p>Find your partner by selecting your languages and city.</p>
 
     <input type="search" name="search" id="search" value="" />
-    <button id="button">Search People</button>
+    <button id="search-button">Search People</button>
     <div id="placeholder"></div>
 
     <script>
-    
-    // $(data.users).each(function () {
-    //     var output = "<ul><li>" + this.full_name + "</li></ul>";
-    //     $('#placeholder').append(output);
-    // });
+
 
     function showUser(result) {
         console.log(result['users'][0]);
@@ -46,12 +42,69 @@ In 2.0 - An access area to chat with people. -->
         $.get('/get_user.json', data, showUser);
     }
 
-    $("#button").on('click', getPeople);
-
-
-   
-
+    $("#search-button").on('click', getPeople);
 
     </script>
+
+    <div class="filter-group">
+        <label>
+            Select the language you're learning:
+            <select name="lang_learn" id="lang_learn" class="filterusers">
+                {% for language in languages %}
+                    <option value = "{{ language.lang_id }}">
+                        {{ language.lang_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+    <br>
+    <div class="filter-group">
+        <label>
+            Select the city to filter users by:
+            <select name="city" id="city" class="filterusers">
+                <option selected value="San-Francisco">San Francisco</option>
+                <option value="San-Jose">San Jose</option>
+                <option value="Oakland">Oakland</option>
+                <option value="Fremont">Fremont</option>
+                <option value="Santa-Rosa">Santa Rosa</option>
+                <option value="Berkeley">Berkeley</option>
+            </select>
+        </label>
+    </div>
+    <br>
+    <div class="filter-group">
+        <button id="filter">Filter Users</button>
+        <div id="placeholder"></div>
+    </div>
+
+    <script>
+
+    function showProfiles(results) {
+        console.log(results);
+        for (var i = 0; i < results['people'].length; i++) {
+            var profiles = '<a href="/user/'+results['people'][i][0]+'">'+results['people'][i][1]+"</a><br>"
+            
+        };
+
+
+    }
+
+    function getProfiles(evt) {
+        var match_profiles = {
+            "lang_learn": $('#lang_learn').val(),
+            "city": $('#city').val()
+        };
+        console.log("something");
+        $.get('/find_matches.json', match_profiles, showProfiles);
+    }
+
+    $("#filter").on('click', getProfiles);
+
+    </script>
+
+
+
+
 
 {% endblock %}
