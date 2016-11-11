@@ -209,12 +209,23 @@ def find_matches():
     # return jsonify(people)
 
 
+@app.route('/users')
+def show_all_users():
+    """Shows all users on one page"""
+
+    #might need to put this in the dashboard route.
+    #access from Nav Bar
+
+    users = User.query.all()
+    return render_template("all_users.html", users=users)
+
+
 @app.route('/user/<int:user_id>')
 def show_user_page(user_id):
     """Show individual user's profile page"""
 
     user = User.query.get(user_id)
-    return render_template(user_page.html, user=user)
+    return render_template("user_page.html", user=user)
 
 
 def send_email(user, personal_msg):
@@ -231,12 +242,7 @@ def send_email(user, personal_msg):
 
     result = mandrill_client.messages.send(message=message)
 
-@app.route('/<int:user_id>', methods=["POST"])
-def process_email(user_id):
 
-    user_email = User.query.get(user_id)
-
-    return redirect("/<int:user_id>")
 
 
 if __name__ == "__main__":

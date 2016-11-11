@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="well spaced" style="width:60%">
+    <h2>Community</h2>
+    <ul>
+      {% for user in users %}
+          <li>
+              <a href="/user/{{ user.user_id }}">
+                {{ user.full_name }} {{ user.email}} ({{ user.city }})
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}
