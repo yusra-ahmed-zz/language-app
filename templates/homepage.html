@@ -1,33 +1,56 @@
 {% extends 'base.html' %}
-{% block content %}
+{% block body %}
 
 <h1>Babilim</h1>
 <p>Some tagline, or slogan, or discription about my app</p>
 
 <div class="well spaced" style="width:40%;">
-<div>
-    <h3>Login</h3>
-    <form action='/' method="POST">
+    <div>
+        <h3>Login</h3>
+        <form action='/' method="POST">
 
-        <div class="form-group">
-            <label>Email:
-                <input type="email" name="email" required class="form-control">
-            </label>
-        </div>
+            <div class="form-group">
+                <label>Email:
+                    <input type="email" name="email" required class="form-control">
+                </label>
+            </div>
 
-        <div class="form-group">
-            <label>Password:
-                <input type="password" name="password" required class="form-control">
-            </label>
-        </div>
+            <div class="form-group">
+                <label>Password:
+                    <input type="password" name="password" required class="form-control">
+                </label>
+            </div>
 
-        <div class="form-group">
-            <input type="submit" value="Log In" class="btn btn-danger">
-        </div>
+            <div class="form-group">
+                <input type="submit" value="Log In" class="btn btn-danger">
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>
 
-<h5>Don't Have an Account? <br><a href="/signup">Sign Up Today!</a></h5>
+{% include 'signup_form.html' %}
 
+<h4>New to Babilim? <button type="button" class="btn btn-info btn-md" data-toggle="modal"data-target="#SignupModal">Sign Up!</button></h4>
+
+<!-- <a href="" data-toggle="modal" data-target="#SignupModal" id="loginNav">Sign Up!</a> -->
+
+<script>
+
+function showRegistration(result) {
+    alert(result);
+}
+
+function submitRegistration(evt) {
+    evt.preventDefault():
+
+    var formValues = $("#signup").serialize();
+
+    $.post("/signup", formValues, showRegistration);
+}
+
+$("#signup").on("signup", submitRegistration);
+
+
+</script>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block title %}Dashboard{% endblock %}
 
-{% block content %}
+{% block body %}
 <!-- The dashboard will provide users access to their profile page?
 A way to filter:
 First choice to make: language user wants to learn
@@ -21,6 +21,7 @@ In 2.0 - An access area to chat with people. -->
     <input type="search" name="search" id="search" value="" />
     <button id="search-button">Search People</button>
     <div id="placeholder"></div>
+    <br>
 
     <script>
 
@@ -46,6 +47,8 @@ In 2.0 - An access area to chat with people. -->
 
     </script>
 
+    <fieldset>
+        <legend>Filter Users:</legend><br>
     <div class="filter-group">
         <label>
             Select the language you're learning:
@@ -77,17 +80,18 @@ In 2.0 - An access area to chat with people. -->
         <button id="filter">Filter Users</button>
         <div id="placeholder"></div>
     </div>
+    </fieldset>
+
+    <div id="user-output-area"><!-- Matched profiles appear here --></div>
 
     <script>
 
     function showProfiles(results) {
         console.log(results);
         for (var i = 0; i < results['people'].length; i++) {
-            var profiles = '<a href="/user/'+results['people'][i][0]+'">'+results['people'][i][1]+"</a><br>"
-            
+            var profile = '<a href="/user/'+results['people'][i]["user_id"]+'">'+results['people'][i]["full_name"]+"</a><br>"
+            $('#user-output-area').append(profile);
         };
-
-
     }
 
     function getProfiles(evt) {

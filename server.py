@@ -30,7 +30,8 @@ def index():
         return redirect("/dashboard")
 
     else:
-        return render_template("homepage.html")
+        languages = Language.query.all()
+        return render_template("homepage.html", languages=languages)
 
 
 @app.route('/', methods=['POST'])
@@ -70,9 +71,10 @@ def logout():
 def register_form():
     """Show new user registration form."""
 
-    languages = Language.query.all()
+    # languages = Language.query.all()
 
-    return render_template("signup_form.html", languages=languages)
+    # return render_template("signup_form.html", languages=languages)
+    pass
 
 
 @app.route('/signup', methods=['POST'])
@@ -191,10 +193,6 @@ def find_matches():
     return jsonify({"people": results})
 
 
-
-
-
-
         # ppl_who_want_my_lang = (
         #     Userlang.query.filter(Userlang.fluent is False,
         #                           Userlang.lang_id == fluent_lang_id))
@@ -214,19 +212,9 @@ def find_matches():
 @app.route('/user/<int:user_id>')
 def show_user_page(user_id):
     """Show individual user's profile page"""
-    # browsed = request.args.get('browsed')
-    # browsed_user = User.query.get(int(browsed))
 
-    # user = User.query.get(user_id)
-    # user_id = session.get("user_id")
-
-    # msg = Message('Hello', sender=user.email, recipients=[browsed_user.email])
-    # msg.body = "Hello Flask message sent from Flask-Mail"
-    # mail.send(msg)
-    # return "Sent"
-    # return render_template("user_profile.html")
-    pass
-    # personal_msg= request.form.get("personal_msg")
+    user = User.query.get(user_id)
+    return render_template(user_page.html, user=user)
 
 
 def send_email(user, personal_msg):

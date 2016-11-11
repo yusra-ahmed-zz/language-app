@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My APP</title>
-  <script src="http://code.jquery.com/jquery.js"></script>
-  <!-- Need to come up with witty app name!!!!!! -->
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery.js"></script>
+    {% block head %}{% endblock %}
 </head>
-
-<a href="/">Home</a>
-
-{% if "user_id" in session %}
-    <a href="/logout">Log Out</a>
-{% else %}
-    <a href="/login">Log In</a>
-    <a href="/signup">Sign Up</a>
-{% endif %}
-
 <body>
-  
-  <hr>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class=flashes>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+    <ul class="nav navbar-nav navbar-left">
+        {% if "user_id" in session %}
+        <li><a href="/logout">Log Out</a></li>
+        {% endif %}
+    </ul>
 
-  {% block content %} put your content here {% endblock %}
+    <div class="container-fluid">
+        <!-- Flashed messages show up here -->
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="alert alert-warning">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+
+{% block body %} 
+Body content goes here! 
+{% endblock %}
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>
+
