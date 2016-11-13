@@ -87,14 +87,10 @@ In 2.0 - An access area to chat with people. -->
     <script>
 
     function showProfiles(results) {
-        console.log(results);
-        console.log(results["name"]);
-        
 
-            var profile = '<a href="/user/'+results["user_id"]+'">'+results["name"]+" | "+results['city']+"</a><br>"
-            // new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
+        var profile = '<a href="/user/'+results["user_id"]+'">'+results["name"]+" | "+results['city']+"</a><br>"
 
-            $('#user-output-area').append(profile);
+        $('#user-output-area').append(profile);
     }
 
     function getProfiles(evt) {
@@ -104,7 +100,6 @@ In 2.0 - An access area to chat with people. -->
         };
         console.log("something");
         $.get('/find_matches.json', match_profiles, showProfiles);
-
     }
 
     $("#filter").on('click', getProfiles);
