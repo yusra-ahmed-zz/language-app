@@ -196,11 +196,7 @@ def find_matches():
         match_info["user_id"] = person.user_id
         matches_info.append(match_info)
 
-
-        # matches_info["name"] = person.full_name
-        #etc
     print "matchesinfo", matches_info
-    # return jsonify({"people": matches_info})
 
     return jsonify(matches_info)
 
@@ -225,7 +221,7 @@ def show_user_page(user_id):
     return render_template("user_page.html", user=user)
 
 
-@app.route('/user_profile_update',methods=['POST'])
+@app.route('/user_profile_update', methods=['POST'])
 def user_profile_update():
     """Handle user profile form to update user's profile"""
 
@@ -238,17 +234,39 @@ def user_profile_update():
 
     new_user_bio = request.form.get("user_bio")
     new_name = request.form.get("full_name")
+    new_email = request.form.get("email")
+    new_username = request.form.get("username")
+    new_age = request.form.get("age")
+    new_city = request.form.get("city")
+    new_zipcode = request.form.get("zipcode")
+
 
     if new_user_bio != "":
         user.user_bio = new_user_bio
-        db.session.commit()
     if new_name != user.full_name:
         user.full_name = new_name
-        db.session.commit()
-
+    if new_email != user.email:
+        user.email = new_email
+    if new_username != user.username:
+        user.username = new_username
+    if new_age != user.age:
+        user.age = new_age
+    if new_city != user.city:
+        user.city = new_city
+    if new_zipcode != user.zipcode:
+        user.zipcode = new_zipcode
+    db.session.commit()
+    # if new_prac_lang != userlang.lang_id:
+    #     userlang.lang_id = new_prac_lang
+    # user_id = user.user_id
+    # session['user_id'] = user_id
+    # new_lang_learn = request.form.get("new_lang_learn")
+    # practice = Userlang(user_id=user_id, lang_id=new_lang_learn,
+    #                     fluent=False)
+    # db.session.add(practice)
+    # db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
-
     flash("Your profile has been updated!")
 
     return redirect("/dashboard")
