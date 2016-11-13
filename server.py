@@ -221,6 +221,30 @@ def show_user_page(user_id):
     return render_template("user_page.html", user=user)
 
 
+@app.route('/user_profile_update',methods=['POST'])
+def user_profile_update():
+    """Handle user profile form to update user's profile"""
+
+    # Get user using user_id in session.
+
+    user = User.query.get(session["user_id"])
+
+    # Get form input for user description, if it is not blank add the new
+    # description to the database.
+
+    new_user_bio = request.form.get("user_bio")
+
+    if new_user_bio != "":
+        user.user_bio = new_user_bio
+        db.session.commit()
+
+    # Flash profile update success and redirect to user homepage.
+
+    flash("Your profile has been updated!")
+
+    return redirect("/dashboard")
+
+
 def send_email(user, personal_msg):
     """Send email to user"""
 
