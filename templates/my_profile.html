@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header overlay">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h3 class="modal-title" id="user_label">{{ user.full_name }}</h3>
+          <h3 class="modal-title" id="user_label">{{ user.full_name }}</h3><br><button class="btn btn-default" id="show_user_form"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> Update your profile</button> 
         </div>
         <div class="modal-body overlay">
           <div class="exisiting_profile">
@@ -19,7 +19,7 @@
               <div class ="col-xs-12 col-sm-12 col-md-8">
                 {% if user.user_bio %}
                   <h3> About me:</h3><h4>{{ user.user_bio }}</h4></br>
-                {% endif %}           
+                {% endif %}          
                 <br>
               </div> <!-- column -->
             </div> <!-- row -->
@@ -28,12 +28,13 @@
           <!-- Hide user info, show user update form -->
             <div class="update_profile">
               
-              <form action="/user_profile_update" method="POST" id="update_user_submit"enctype="multipart/form-data">
-                
+              <form action="/user_profile_update" method="POST" id="update_user_submit"enctype="multipart/form-data"> 
                 <div class="row">
                   <div class="col-xs-12 col-sm-12 col-md-10 form-group">
-                    
-                    
+                    <div class="form-group">
+                                <label for="firstname">Full Name:</label>
+                                <input type="text" name="full_name" id="full_name" class="form-control" value="{{ user.full_name }}">
+                            </div> 
                     <h3>Tell us about yourself</h3>
 
                     <p><b>Currently:</b></p><i>{{ user.user_bio }}</i>

@@ -233,10 +233,18 @@ def user_profile_update():
     # description to the database.
 
     new_user_bio = request.form.get("user_bio")
+    new_name = request.form.get("full_name")
 
     if new_user_bio != "":
         user.user_bio = new_user_bio
         db.session.commit()
+    if new_name != user.full_name:
+        user.full_name = new_name
+        db.session.commit()
+
+    # new_info = User(full_name=new_name)
+    # db.session.add(new_info)
+    # db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
 
