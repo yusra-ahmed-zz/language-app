@@ -132,11 +132,13 @@ def register_process():
 def user_dashboard():
     """Dashboard for users who are logged in."""
 
-    user = User.query.get(session['user_id'])
     languages = Language.query.all()
-    match = Userlang.query.all()
-
-    return render_template("dashboard.html", user=user, languages=languages)
+    user_id = session.get("user_id")
+    if user_id:
+        user = User.query.get(session['user_id'])
+        return render_template("dashboard.html", user=user, user_id=user_id, languages=languages)
+    else:
+        return redirect("/")
 
 @app.route('/get_user.json')
 def get_users():
@@ -205,6 +207,7 @@ def show_all_users():
 
     #might need to put this in the dashboard route.
     #access from Nav Bar
+    #need access to friends in Nav Bar eventually
 
     users = User.query.all()
     return render_template("all_users.html", users=users)
