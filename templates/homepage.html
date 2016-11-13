@@ -29,28 +29,12 @@
     </div>
 </div>
 
-{% include 'signup_form.html' %}
+
 
 <h4>New to Babilim? <button type="button" class="btn btn-info btn-md" data-toggle="modal"data-target="#SignupModal">Sign Up!</button></h4>
 
-<!-- <a href="" data-toggle="modal" data-target="#SignupModal" id="loginNav">Sign Up!</a> -->
-
-<script>
-
-function showRegistration(result) {
-    alert(result);
-}
-
-function submitRegistration(evt) {
-    evt.preventDefault():
-
-    var formValues = $("#signup").serialize();
-
-    $.post("/signup", formValues, showRegistration);
-}
-
-$("#signup").on("signup", submitRegistration);
+{% include 'signup_form.html' %}
 
 
-</script>
+
 {% endblock %}

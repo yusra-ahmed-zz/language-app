@@ -71,10 +71,9 @@ def logout():
 def register_form():
     """Show new user registration form."""
 
-    # languages = Language.query.all()
+    languages = Language.query.all()
 
-    # return render_template("signup_form.html", languages=languages)
-    pass
+    return render_template("signup_form.html", languages=languages)
 
 
 @app.route('/signup', methods=['POST'])
@@ -90,6 +89,7 @@ def register_process():
     city = request.form.get("city")
     zipcode = request.form.get("zipcode")
     user_bio = request.form.get("user_bio")
+
 
     user = User.query.filter_by(email=email).first()
 
@@ -151,7 +151,7 @@ def get_users():
     for user in users:
         userlist = [user.user_id, user.full_name]
         userinfo["users"].append(userlist)
-
+    print "search feature", userinfo
     return jsonify(userinfo)
 
 
@@ -159,54 +159,44 @@ def get_users():
 def find_matches():
 
     user_id = session["user_id"]
-    print "user_id", user_id
-    user = User.query.filter(User.user_id == user_id).first()
-
     prac_lang_id = int(request.args.get("lang_learn"))
-    print "practice", prac_lang_id
+    desired_city = request.args.get("city")
 
-    match_ids = set()
+    my_fluent_userlang_lang_ids = (
+        db.session.query(Userlang.lang_id)
+                  .filter(Userlang.user_id == user_id,
+                          Userlang.fluent.is_(True))
+                  .subquery())
 
-    print "user.fluent_userlangs", user.fluent_userlangs
+    ppl_ids_who_want_my_lang = (
+        db.session.query(Userlang.user_id)
+                  .filter(Userlang.fluent.is_(False),
+                          Userlang.lang_id.in_(my_fluent_userlang_lang_ids))
+                  .subquery())
 
-    for fluent_userlang in user.fluent_userlangs:
-        fluent_lang_id = fluent_userlang.lang_id
-        print "fluentid", fluent_lang_id
+    matches = (
+        db.session.query(User)
+                  .join(Userlang)
+                  .filter(Userlang.user_id.in_(ppl_ids_who_want_my_lang),
+                          Userlang.fluent.is_(True),
+                          Userlang.lang_id == prac_lang_id,
+                          User.city == desired_city)
+                  .distinct()
+                  .all())
 
-        people_want = db.session.query(User).join(Userlang).filter(Userlang.fluent.is_(False),
-                                   Userlang.lang_id == fluent_lang_id).all()
+    print "matches", matches
+    matches_info = {}
+    for person in matches:
+        matches_info["name"] = person.full_name
+        matches_info["city"] = person.city
+        matches_info["user_id"] = person.user_id
 
-        print "want", people_want
-        for person in people_want:
-            fluent_ids = [userlang.lang_id for userlang in person.fluent_userlangs]
-            print "fluentid", fluent_ids
-            if prac_lang_id in fluent_ids:
-                match_ids.add(person.user_id)
-        print "mathcs", match_ids
+        # matches_info["name"] = person.full_name
+        #etc
+    print "matchesinfo", matches_info
+    # return jsonify({"people": matches_info})
 
-        matches = db.session.query(User).filter(User.user_id.in_(match_ids)).all()
-
-        print "this match", matches
-
-    results = [user.to_dict() for user in matches]
-    print "results", results
-    return jsonify({"people": results})
-
-
-        # ppl_who_want_my_lang = (
-        #     Userlang.query.filter(Userlang.fluent is False,
-        #                           Userlang.lang_id == fluent_lang_id))
-        # ppl_who_also_speak_p_lang = (
-        #     ppl_who_want_my_lang.filter(Userlang.fluent is True,
-        #                                 Userlang.lang_id == prac_lang_id))
-        # matches = ppl_who_also_speak_p_lang.all()
-    #     print "matches", matches
-    #     all_userlang_matches.extend(matches)
-
-    # people = [userlang.user for userlang in all_userlang_matches]
-
-    # print "people", people
-    # return jsonify(people)
+    return jsonify(matches_info)
 
 
 @app.route('/users')
@@ -257,4 +247,4 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     DebugToolbarExtension(app)
 
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5001, passthrough_errors=False)

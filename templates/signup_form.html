@@ -1,8 +1,11 @@
-{% extends 'base.html' %}
-{% block body %}
-<div style="display:none">
+<html>
+<head>
+    <title>Signup Form</title>
+</head>
+<body>
+    <!-- <div style="display:inline"> -->
     <div class="modal fade" id="SignupModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -77,8 +80,23 @@
                         </div>
                     </form>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+        </div>
     </div>
-</div>
-{% endblock %}
+<!-- </div> -->
+
+</body>
+</html>
+
+<script>
+function showRegistration(result) {
+    alert(result);
+}
+function submitRegistration(evt) {
+    evt.preventDefault():
+    var formValues = $("#signup").serialize();
+    $.post("/signup", formValues, showRegistration);
+}
+$("#signup").on("signup", submitRegistration);
+// Redundant jquery code? Talk to Katie about this later.
+</script>
