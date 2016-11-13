@@ -187,11 +187,15 @@ def find_matches():
                   .all())
 
     print "matches", matches
-    matches_info = {}
+    matches_info = []
+
     for person in matches:
-        matches_info["name"] = person.full_name
-        matches_info["city"] = person.city
-        matches_info["user_id"] = person.user_id
+        match_info = {}
+        match_info["name"] = person.full_name
+        match_info["city"] = person.city
+        match_info["user_id"] = person.user_id
+        matches_info.append(match_info)
+
 
         # matches_info["name"] = person.full_name
         #etc
@@ -242,9 +246,6 @@ def user_profile_update():
         user.full_name = new_name
         db.session.commit()
 
-    # new_info = User(full_name=new_name)
-    # db.session.add(new_info)
-    # db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
 
