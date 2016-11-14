@@ -226,9 +226,8 @@ def user_profile_update():
     """Handle user profile form to update user's profile"""
 
     # Get user using user_id in session.
-
     user = User.query.get(session["user_id"])
-
+    
     # Get form input for user description, if it is not blank add the new
     # description to the database.
 
@@ -255,16 +254,14 @@ def user_profile_update():
         user.city = new_city
     if new_zipcode != user.zipcode:
         user.zipcode = new_zipcode
+    db.session.add(user)
     db.session.commit()
-    # if new_prac_lang != userlang.lang_id:
+
+    # new_prac_lang = request.form.get("new_lang_learn")
+    # if int(new_prac_lang) != userlang.lang_id:
     #     userlang.lang_id = new_prac_lang
-    # user_id = user.user_id
-    # session['user_id'] = user_id
-    # new_lang_learn = request.form.get("new_lang_learn")
-    # practice = Userlang(user_id=user_id, lang_id=new_lang_learn,
-    #                     fluent=False)
-    # db.session.add(practice)
-    # db.session.commit()
+
+    #     db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
     flash("Your profile has been updated!")

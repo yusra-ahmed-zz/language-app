@@ -25,7 +25,8 @@
                             <input type="number" value="{{ user.age }}" name="age" class="form-control"><br>
                         <label for="city">City:</label>
                             <select name="city" required>
-                                <option selected value="{{ user.city }}">San Francisco</option>
+                                <option selected value="{{ user.city }}">{{ user.city }}</option>
+                                <option value="San Francisco">San Francisco</option>
                                 <option value="San-Jose">San Jose</option>
                                 <option value="Oakland">Oakland</option>
                                 <option value="Fremont">Fremont</option>
@@ -37,7 +38,7 @@
                         <label for="new_lang_learn">Update the language you're learning:</label>
                             <select name="new_lang_learn" required>
                                 {% for language in languages %}
-                                    <option value = "{{ language.lang_id }}">{{ language.lang_name }}</option>
+                                    <option selected="{{ languages.lang_id }}">{{ language.lang_name }}</option>
                                 {% endfor %}
                             </select><br><br>
                         <label for="user_bio">Update your bio:</label>
