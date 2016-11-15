@@ -93,7 +93,7 @@ def register_process():
 
     user = User.query.filter_by(email=email).first()
 
-    # send_email(user)
+
 
     if user:
         flash("This email is already registered. Please login with your email and password.")
@@ -105,7 +105,7 @@ def register_process():
         db.session.add(user)
         db.session.commit()
 
-
+        send_email(user)
 
         user_id = User.query.filter(User.email == email).one().user_id
         print user_id
@@ -227,7 +227,6 @@ def user_profile_update():
 
     # Get user using user_id in session.
     user = User.query.get(session["user_id"])
-    
     # Get form input for user description, if it is not blank add the new
     # description to the database.
 
@@ -269,7 +268,7 @@ def user_profile_update():
     return redirect("/dashboard")
 
 
-def send_email(user, personal_msg):
+def send_email(user):
     """Send email to user"""
 
     # personal_msg = personal_msg
@@ -277,7 +276,7 @@ def send_email(user, personal_msg):
     message = {'html': '<p> hero </p>',
                 'from_email': 'info@babilim.us',
                 'from_name': 'Babilim',
-                'subject': 'Message from Babilim user',
+                'subject': 'Welcome to Babilim',
                 'to': [{'email': user.email}]
     }
 
