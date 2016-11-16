@@ -3,18 +3,22 @@ from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-# from flask_mail import Mail, Message
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
 
 from model import connect_to_db, db, User, Language, Userlang
 import mandrill
 
-# import email
+
+async_mode = None
 
 app = Flask(__name__)
 mandrill_client = mandrill.Mandrill('kG9ii2FflHnLKqA4oJAKIA')
 
 
 app.secret_key = "Myapp1234"
+socketio = SocketIO(app, async_mode=async_mode)
+thread = None
 
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
@@ -52,6 +56,7 @@ def login_process():
         return redirect("/")
 
     session["user_id"] = user.user_id
+    session["user_name"] = user.username
 
     flash("Login Successful!")
 
@@ -133,6 +138,7 @@ def user_dashboard():
     """Dashboard for users who are logged in."""
 
     languages = Language.query.all()
+    userlangs = Userlang.query.all()
     user_id = session.get("user_id")
     if user_id:
         user = User.query.get(session['user_id'])
@@ -273,7 +279,7 @@ def send_email(user):
 
     # personal_msg = personal_msg
     # 'html': '<p>' + personal_msg + '</p>',
-    message = {'html': '<p> hero </p>',
+    message = {'html': '<p> Welcome to Babilim! </p>',
                 'from_email': 'info@babilim.us',
                 'from_name': 'Babilim',
                 'subject': 'Welcome to Babilim',
@@ -282,13 +288,50 @@ def send_email(user):
 
     result = mandrill_client.messages.send(message=message)
 
+# @app.route('/test_chat')
+# def test_chat():
+#     return render_template('testchat.html', async_mode=socketio.async_mode)
+
+@socketio.on('join', namespace='/test')
+def join(message):
+    join_room(message['room'])
+    print "user connected to room %s" % message['room']
+
+@socketio.on('leave', namespace='/test')
+def leave(message):
+    leave_room(message['room'])
+
+@socketio.on('close_room', namespace='/test')
+def close(message):
+    close_room(message['room'])
+
+
+@socketio.on('send_to_room', namespace='/test')
+def send_to_room(message):
+    print "sending message %s to room %s" % (
+        message['data'],
+        message['room']
+    )
+    emit('room_message', message['data'], room=message['room'])
+
+
+# @socketio.on('connect', namespace='/test')
+# def test_connect():
+#     global thread
+#     if thread is None:
+#         thread = socketio.start_background_task(target=background_thread)
+#     emit('my_response', {'data': 'Connected', 'count': 0})
+
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected', request.sid)
 
 
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
-
     # Do not debug for demo
     app.debug = True
 
@@ -296,5 +339,5 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
-
-    app.run(debug=True, host='0.0.0.0', port=5001, passthrough_errors=False)
+    # , passthrough_errors=False
+    socketio.run(app, debug=True, host='0.0.0.0', port=5001)

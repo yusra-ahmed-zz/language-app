@@ -38,7 +38,7 @@
                         <label for="new_lang_learn">Update the language you're learning:</label>
                             <select name="new_lang_learn" required>
                                 {% for language in languages %}
-                                    <option selected="{{ language.lang_id }}">{{ language.lang_name }}</option>
+                                    <option selected value="{{ language.lang_id }}">{{ language.lang_name }}</option>
                                 {% endfor %}
                             </select><br><br>
                         <label for="user_bio">Update your bio:</label>

@@ -12,6 +12,31 @@
 
     <a href="mailto:{{ user.email }}">Send Email</a></button>
 
+    <button id="chat">Chat with User</button>
+    <script type="text/javascript">
+        $(document).ready(function() {
+          namespace = '/test';
+          var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
+
+          // socket.on('connect', function() {
+          //   socket.emit('join', { room: '{{ user.username }}' });
+
+            $("#chat").on("click", function() {
+                socket.emit('send_to_room',
+                    {
+                        room: '{{ user.username }}',
+                        data: {
+                            sender: "{{ session.user_name }}",
+                            text: "whatever"
+                        }
+                    }
+                );
+            });
+          // });
+        });
+
+    </script>
+
     <!-- <form action="mailto:{{ user.email}}" method="post"               enctype="text/plain">
     Name:<br>
     <input type="text" name="name"><br>

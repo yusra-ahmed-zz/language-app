@@ -39,6 +39,7 @@ In 2.0 - An access area to chat with people. -->
        var data = {
         "search": $('#search').val()
         };
+        $('#placeholder').html(" ");
         $.get('/get_user.json', data, showUser);
     }
 
