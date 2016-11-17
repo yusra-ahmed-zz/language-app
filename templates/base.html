@@ -11,7 +11,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      namespace = '/test';
+      namespace = '/chat';
       var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
       
       {% if "user_name" in session %}
@@ -22,11 +22,14 @@
 
       
 
-      socket.on('room_message', function(msg){
+      socket.on('chat_request', function(msg){
         console.log(msg);
-        alert("Message from: " + msg.sender);
+        if (window.confirm("Message from: " + msg.sender))
+        window.location.href='/test_chat'
       });
     });
+      
+// alert("Message from: " + msg.sender);
   </script>
 
 </head>

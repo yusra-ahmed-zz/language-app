@@ -288,25 +288,28 @@ def send_email(user):
 
     result = mandrill_client.messages.send(message=message)
 
-# @app.route('/test_chat')
-# def test_chat():
-#     return render_template('testchat.html', async_mode=socketio.async_mode)
+@app.route('/test_chat')
+def test_chat():
+    return render_template('test_chat.html', async_mode=socketio.async_mode)
 
-@socketio.on('join', namespace='/test')
+@socketio.on('join', namespace='/chat')
 def join(message):
     join_room(message['room'])
     print "user connected to room %s" % message['room']
 
-@socketio.on('leave', namespace='/test')
+@socketio.on('leave', namespace='/chat')
 def leave(message):
     leave_room(message['room'])
 
-@socketio.on('close_room', namespace='/test')
+@socketio.on('close_room', namespace='/chat')
 def close(message):
     close_room(message['room'])
 
+@socketio.on('initiate_chat', namespace='/chat')
+def initiate_chat(message):
+    emit('chat_request', message['data'], room=message['user'])
 
-@socketio.on('send_to_room', namespace='/test')
+@socketio.on('send_to_room', namespace='/chat')
 def send_to_room(message):
     print "sending message %s to room %s" % (
         message['data'],
@@ -323,7 +326,7 @@ def send_to_room(message):
 #     emit('my_response', {'data': 'Connected', 'count': 0})
 
 
-@socketio.on('disconnect', namespace='/test')
+@socketio.on('disconnect', namespace='/chat')
 def test_disconnect():
     print('Client disconnected', request.sid)
 

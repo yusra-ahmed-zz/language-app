@@ -15,22 +15,23 @@
     <button id="chat">Chat with User</button>
     <script type="text/javascript">
         $(document).ready(function() {
-          namespace = '/test';
+          namespace = '/chat';
           var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
 
           // socket.on('connect', function() {
           //   socket.emit('join', { room: '{{ user.username }}' });
 
             $("#chat").on("click", function() {
-                socket.emit('send_to_room',
+                socket.emit('initiate_chat',
                     {
-                        room: '{{ user.username }}',
+                        user: '{{ user.username }}',
                         data: {
                             sender: "{{ session.user_name }}",
                             text: "whatever"
                         }
                     }
                 );
+                document.location="/test_chat";
             });
           // });
         });

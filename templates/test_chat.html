@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Babilim Chat{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            namespace = '/chat';
+            var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
+            socket.on('connect', function() {
+              socket.emit('join', {'room': '/test_chat'});
+            });
+            socket.on('room_message', function(data) {
+
+                var chat_value = $('#chat').val();
+                var new_text = data.sender + ": " + data.text;
+                $('#chat').val(chat_value + "\n" +  new_text);
+                // alert("You received a message")
+            });
+            $('#text').keypress(function(e) {
+                var code = e.keyCode || e.which;
+                if (code == 13) {
+                    // 13 is the enter key
+                    var text = $('#text').val();
+                    $('#text').val('');
+                    socket.emit('send_to_room',
+                        {
+                            room: '/test_chat',
+                            data: {
+                                sender: "{{ session.user_name }}",
+                                text: text
+                            }
+                        }
+                    );
+                }
+            });
+
+            $('#leave').on('click', function (evt) {
+                socket.emit('left', {}, function() {
+                    socket.disconnect();
+                    // go back to the login page
+                    window.location.href = '/dashboard';
+                });
+                return false;
+            });
+        });
+    </script>
+
+    <body>
+        <h1>Chat it up</h1>
+        <textarea id="chat" cols="80" rows="20"></textarea><br><br>
+        <input id="text" size="80" placeholder="Enter your message here"><br><br>
+        <a href="#" id="leave">Leave this room</a>
+    </body>
+</html>
+
+{% endblock %}
