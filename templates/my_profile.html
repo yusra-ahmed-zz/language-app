@@ -35,10 +35,15 @@
                             </select><br><br>
                         <label for="zipcode">Zipcode:</label>
                             <input type="number" value="{{ user.zipcode }}" name="zipcode" class="form-control" required><br>
-                        <label for="new_lang_learn">Update the language you're learning:</label>
-                            <select name="new_lang_learn" required>
+                        <label for="new_prac_lang">Update the language you're learning:</label>
+                            <select name="lang_learn" required>
                                 {% for language in languages %}
-                                    <option selected value="{{ language.lang_id }}">{{ language.lang_name }}</option>
+                                    <option
+                                        {% if language.lang_id==prac_lang_id %}
+                                            selected
+                                        {% endif %}
+
+                                            value="{{ language.lang_id }}">{{ language.lang_name }}</option>
                                 {% endfor %}
                             </select><br><br>
                         <label for="user_bio">Update your bio:</label>

@@ -142,7 +142,10 @@ def user_dashboard():
     user_id = session.get("user_id")
     if user_id:
         user = User.query.get(session['user_id'])
-        return render_template("dashboard.html", user=user, user_id=user_id, languages=languages)
+        prac_lang_id = user.practice_userlangs[0].lang_id
+        return render_template("dashboard.html", user=user, user_id=user_id,
+                                                languages=languages,
+                                                prac_lang_id=prac_lang_id)
     else:
         return redirect("/")
 
@@ -233,6 +236,7 @@ def user_profile_update():
 
     # Get user using user_id in session.
     user = User.query.get(session["user_id"])
+    
     # Get form input for user description, if it is not blank add the new
     # description to the database.
 
@@ -243,23 +247,21 @@ def user_profile_update():
     new_age = request.form.get("age")
     new_city = request.form.get("city")
     new_zipcode = request.form.get("zipcode")
+    new_lang_learn = request.form.get("lang_learn")
+    
 
-
-    if new_user_bio != "":
-        user.user_bio = new_user_bio
-    if new_name != user.full_name:
-        user.full_name = new_name
-    if new_email != user.email:
-        user.email = new_email
-    if new_username != user.username:
-        user.username = new_username
-    if new_age != user.age:
-        user.age = new_age
-    if new_city != user.city:
-        user.city = new_city
-    if new_zipcode != user.zipcode:
-        user.zipcode = new_zipcode
-    db.session.add(user)
+    
+    user.user_bio = new_user_bio
+    user.full_name = new_name
+    user.email = new_email
+    user.username = new_username
+    user.age = new_age
+    user.city = new_city
+    user.zipcode = new_zipcode
+    # user.practice_userlangs.lang_id = int(new_lang_learn)
+    user_lang = Userlang.query.filter(Userlang.user_id==user.user_id, Userlang.fluent==False).one()
+    user_lang.lang_id = int(new_lang_learn)
+    
     db.session.commit()
 
     # new_prac_lang = request.form.get("new_lang_learn")
@@ -290,6 +292,8 @@ def send_email(user):
 
 @app.route('/test_chat')
 def test_chat():
+    # write function that creates uuid(uuid-4) after user b creates connection
+    # update urls to /test_chat/{uuid-4}
     return render_template('test_chat.html', async_mode=socketio.async_mode)
 
 @socketio.on('join', namespace='/chat')
