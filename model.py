@@ -32,7 +32,7 @@ class User(db.Model, ToDictMixin):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     full_name = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(30), nullable=False)
+    username = db.Column(db.String(30), nullable=False, unique=True)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(30), nullable=False)
     age = db.Column(db.Integer, nullable=True)
@@ -89,12 +89,19 @@ class Userlang(db.Model):
 
 ##############################################################################
 # Helper functions
+def example_data():
+    """create some sample data"""
 
-def connect_to_db(app):
+    ex_user = User(user_id=1, full_name="Yusra", username="yusra", email="yusra@yusra.com", 
+            password="yusra", age=29, city="San Francisco", zipcode="94123", user_bio="blah")
+    ex_lang = Language(lang_id=1, lang_name="Arabic")
+
+    ex_userlang = Userlang(userlang_id=1, user_id=1, lang_id=1, fluent=False)
+def connect_to_db(app, db_URI='postgresql:///userlangs'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///userlangs'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)

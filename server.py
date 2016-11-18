@@ -16,7 +16,7 @@ app = Flask(__name__)
 mandrill_client = mandrill.Mandrill('kG9ii2FflHnLKqA4oJAKIA')
 
 
-app.secret_key = "Myapp1234"
+app.secret_key = "Babilim1234"
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 
