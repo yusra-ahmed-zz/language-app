@@ -94,6 +94,7 @@ def register_process():
     city = request.form.get("city")
     zipcode = request.form.get("zipcode")
     user_bio = request.form.get("user_bio")
+    profile_photo = request.form.get("profile_photo")
 
 
     user = User.query.filter_by(email=email).first()
@@ -106,7 +107,7 @@ def register_process():
     else:
         user = User(full_name=full_name, email=email, username=username,
                     password=password, age=age, city=city, zipcode=zipcode,
-                    user_bio=user_bio)
+                    user_bio=user_bio, profile_photo=profile_photo)
         db.session.add(user)
         db.session.commit()
 
@@ -155,15 +156,19 @@ def get_users():
 
     search = request.args.get("search")
 
-    users = User.query.filter(User.full_name.like('%'+search+'%')).all()
+    for item in search:
+        if item == 0:
+            return
+        else:
+            users = User.query.filter(User.full_name.like('%'+search+'%')).all()
 
-    userinfo = {"users": []}
+            userinfo = {"users": []}
 
-    for user in users:
-        userlist = [user.user_id, user.full_name]
-        userinfo["users"].append(userlist)
-    print "search feature", userinfo
-    return jsonify(userinfo)
+            for user in users:
+                userlist = [user.user_id, user.full_name]
+                userinfo["users"].append(userlist)
+            print "search feature", userinfo
+            return jsonify(userinfo)
 
 
 @app.route('/find_matches.json')
@@ -178,12 +183,14 @@ def find_matches():
                   .filter(Userlang.user_id == user_id,
                           Userlang.fluent.is_(True))
                   .subquery())
+    print "blah", my_fluent_userlang_lang_ids
 
     ppl_ids_who_want_my_lang = (
         db.session.query(Userlang.user_id)
                   .filter(Userlang.fluent.is_(False),
                           Userlang.lang_id.in_(my_fluent_userlang_lang_ids))
                   .subquery())
+    print "blah2", ppl_ids_who_want_my_lang
 
     matches = (
         db.session.query(User)
@@ -203,6 +210,7 @@ def find_matches():
         match_info["name"] = person.full_name
         match_info["city"] = person.city
         match_info["user_id"] = person.user_id
+        match_info["photo"] = person.profile_photo
         matches_info.append(match_info)
 
     print "matchesinfo", matches_info
@@ -236,7 +244,6 @@ def user_profile_update():
 
     # Get user using user_id in session.
     user = User.query.get(session["user_id"])
-    
     # Get form input for user description, if it is not blank add the new
     # description to the database.
 
@@ -248,9 +255,8 @@ def user_profile_update():
     new_city = request.form.get("city")
     new_zipcode = request.form.get("zipcode")
     new_lang_learn = request.form.get("lang_learn")
-    
+    new_photo = request.form.get("profile_photo")
 
-    
     user.user_bio = new_user_bio
     user.full_name = new_name
     user.email = new_email
@@ -258,17 +264,10 @@ def user_profile_update():
     user.age = new_age
     user.city = new_city
     user.zipcode = new_zipcode
-    # user.practice_userlangs.lang_id = int(new_lang_learn)
+    user.profile_photo = new_photo
     user_lang = Userlang.query.filter(Userlang.user_id==user.user_id, Userlang.fluent==False).one()
     user_lang.lang_id = int(new_lang_learn)
-    
     db.session.commit()
-
-    # new_prac_lang = request.form.get("new_lang_learn")
-    # if int(new_prac_lang) != userlang.lang_id:
-    #     userlang.lang_id = new_prac_lang
-
-    #     db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
     flash("Your profile has been updated!")
@@ -320,15 +319,6 @@ def send_to_room(message):
         message['room']
     )
     emit('room_message', message['data'], room=message['room'])
-
-
-# @socketio.on('connect', namespace='/test')
-# def test_connect():
-#     global thread
-#     if thread is None:
-#         thread = socketio.start_background_task(target=background_thread)
-#     emit('my_response', {'data': 'Connected', 'count': 0})
-
 
 @socketio.on('disconnect', namespace='/chat')
 def test_disconnect():

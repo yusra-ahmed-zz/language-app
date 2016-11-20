@@ -47,7 +47,10 @@
                                 {% endfor %}
                             </select><br><br>
                         <label for="user_bio">Update your bio:</label>
-                        <textarea class="form-control" placeholder="{{ user.user_bio }}" rows = 6 name="user_bio"></textarea><br>
+                        <textarea class="form-control" placeholder="{{ user.user_bio }}" rows = 6 name="user_bio">{{ user.user_bio }}</textarea>
+                        <br>
+                        <label for="profile_photo">Update your photo url:</label>
+                        <input type="text" class="form-control" value="{{ user.profile_photo }}" rows = 1 name="profile_photo"><br>
                     <button class="btn btn-default profile_submit" type="submit">Update Your Profile</button>
                     <a data-dismiss="modal" aria-label="Close" class="invite_cancel">Cancel</a>
                     <br>

@@ -6,33 +6,38 @@
 
 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#user_profile">Update/View Profile</a></button>
 
+    <input type="search" name="search" id="search">
+    <button id="search-button">Search People</button>
+    <div id="placeholder"></div>
+
+
 {% include 'my_profile.html' %}
 
 
-<!-- In 2.0 - Access to their list of people favorited?
-In 2.0 - An access area to chat with people. -->
+    <div id="prof_lft_col">
+    <div id="prof_pic"><img src="{{ user.profile_photo }}" width='20%'></div>
+    </div>
 
-
-    <h1>Welcome {{ user.full_name }}</h1>
-    <h2>Search for a Language Partner</h2>
+    <h2>Welcome, {{ user.full_name }}!</h2>
+    <h4>Search for a Language Partner</h4>
     <p>Find your partner by selecting your languages and city.</p>
-
-    <input type="search" name="search" id="search" value="" />
-    <button id="search-button">Search People</button>
-    <div id="placeholder"></div>
-    <br>
 
     <script>
 
 
+
     function showUser(result) {
         console.log(result['users'][0]);
-
-        for (var i = 0; i < result['users'].length; i++){
-            new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
-            console.log(new_user);
-            $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
-        }
+        if (result.length === 0) {
+            $('#placeholder').html("Please type in a name");
+        } else {
+            for (var i = 0; i < result['users'].length; i++){
+                new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
+                console.log(new_user);
+                
+                $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+            }
+          }
     }
 
     function getPeople(evt) {
@@ -42,7 +47,6 @@ In 2.0 - An access area to chat with people. -->
         $('#placeholder').html(" ");
         $.get('/get_user.json', data, showUser);
     }
-
     $("#search-button").on('click', getPeople);
 
     </script>
@@ -66,8 +70,9 @@ In 2.0 - An access area to chat with people. -->
         <label>
             Select the city to filter users by:
             <select name="city" id="city" class="filterusers">
-                <option selected value="San-Francisco">San Francisco</option>
+                <option value="--">--</option>
                 <option value="San-Jose">San Jose</option>
+                <option value="San-Francisco">San Francisco</option>
                 <option value="Oakland">Oakland</option>
                 <option value="Fremont">Fremont</option>
                 <option value="Santa-Rosa">Santa Rosa</option>
@@ -82,7 +87,8 @@ In 2.0 - An access area to chat with people. -->
     </div>
     </fieldset>
 
-    <div id="user-output-area"><!-- Matched profiles appear here --></div>
+    <div id="user-output-area"><!-- Matched profiles appear here -->
+    </div>
 
     <script>
 
@@ -91,7 +97,7 @@ In 2.0 - An access area to chat with people. -->
             $('#user-output-area').html("No Users Found");
         }
         for (var i = 0; i < results.length; i++){
-            var profile = '<a href="/user/'+results[i]["user_id"]+'">'+results[i]["name"]+" | "+results[i]['city']+"</a><br>"
+            var profile = '<a href="/user/'+results[i]["user_id"]+'">'+results[i]["photo"]+" "+results[i]["name"]+" | "+results[i]['city']+"</a><br>"
 
             $('#user-output-area').append(profile);
         }

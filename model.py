@@ -38,7 +38,9 @@ class User(db.Model, ToDictMixin):
     age = db.Column(db.Integer, nullable=True)
     city = db.Column(db.String(30), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
-    user_bio = db.Column(db.String(300), nullable=True)
+    user_bio = db.Column(db.String(500), nullable=True)
+    profile_photo = db.Column(db.String(300), nullable=True)
+
 
     fluent_join = "and_(User.user_id==Userlang.user_id, Userlang.fluent==True)"
     practice_join = "and_(User.user_id==Userlang.user_id, Userlang.fluent==False)"
@@ -87,16 +89,18 @@ class Userlang(db.Model):
         return "<Userlang userlang_id=%s user_id=%s lang_id=%s fluent=%s>" % (self.userlang_id, self.user_id, self.lang_id, self.fluent)
 
 
+
 ##############################################################################
 # Helper functions
-def example_data():
-    """create some sample data"""
+# def example_data():
+#     """create some sample data"""
 
-    ex_user = User(user_id=1, full_name="Yusra", username="yusra", email="yusra@yusra.com", 
-            password="yusra", age=29, city="San Francisco", zipcode="94123", user_bio="blah")
-    ex_lang = Language(lang_id=1, lang_name="Arabic")
+#     ex_user = User(user_id=1, full_name="Yusra", username="yusra", email="yusra@yusra.com",
+#             password="yusra", age=29, city="San Francisco", zipcode="94123", user_bio="blah")
+#     ex_lang = Language(lang_id=1, lang_name="Arabic")
 
-    ex_userlang = Userlang(userlang_id=1, user_id=1, lang_id=1, fluent=False)
+#     ex_userlang = Userlang(userlang_id=1, user_id=1, lang_id=1, fluent=False)
+
 def connect_to_db(app, db_URI='postgresql:///userlangs'):
     """Connect the database to our Flask app."""
 

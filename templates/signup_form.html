@@ -55,7 +55,7 @@
                                     <option value = "{{ language.lang_id }}">{{ language.lang_name }}</option>
                                 {% endfor %}
                             </select>
-                            <p>*Please provide us with one language you're learning currently. If you're learning more than one language, you'll be able to add those language options later in your profile page.</p>
+                            <p>*Please provide us with one language you're learning currently.</p>
                         </label>
                         <label>
                             Select the first language in which you're fluent:
@@ -66,7 +66,7 @@
                                     </option>
                                 {% endfor %}
                             </select>
-                            <p>*Please provide us with one language you're fluent in. You'll be able to add additional languages later in your profile page.</p>
+                            <p>*Please provide us with one language you're fluent in.</p>
                         </label>
                         <label>
                             <p>Please share a little about yourself:</p>
@@ -74,6 +74,10 @@
                                 <textarea name="user_bio"></textarea>
                             </div>
                         </label>
+                        <label>
+                            <p>Please provide an image url:</p>
+                            <div>
+                                <textarea name="profile_photo"></textarea>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="button submit" form="signup" class="btn btn-primary">Register</button>
@@ -93,7 +97,7 @@ function showRegistration(result) {
     alert(result);
 }
 function submitRegistration(evt) {
-    evt.preventDefault():
+    // evt.preventDefault():
     var formValues = $("#signup").serialize();
     $.post("/signup", formValues, showRegistration);
 }

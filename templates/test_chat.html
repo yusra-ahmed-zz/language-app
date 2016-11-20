@@ -39,7 +39,8 @@
                 socket.emit('left', {}, function() {
                     socket.disconnect();
                     // go back to the login page
-                    window.location.href = '/dashboard';
+                    window.close();
+                    // window.location.href = '/dashboard';
                 });
                 return false;
             });
@@ -50,7 +51,7 @@
         <h1>Chat it up</h1>
         <textarea id="chat" cols="80" rows="20"></textarea><br><br>
         <input id="text" size="80" placeholder="Enter your message here"><br><br>
-        <a href="#" id="leave">Leave this room</a>
+        <a href="#" id="leave">Leave this conversation</a>
     </body>
 </html>
 

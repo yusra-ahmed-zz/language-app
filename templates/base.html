@@ -25,7 +25,7 @@
       socket.on('chat_request', function(msg){
         console.log(msg);
         if (window.confirm("Message from: " + msg.sender))
-        window.location.href='/test_chat'
+        window.open('/test_chat')
       });
     });
       
@@ -36,7 +36,11 @@
 <body>
     <ul class="nav navbar-nav navbar-left">
         {% if "user_id" in session %}
-        <li><a href="/logout">Log Out</a></li>
+        <li>
+          <a href="/logout">Log Out</a>
+          <a href="/dashboard">Dashboard</a>
+
+        </li>
         {% endif %}
     </ul>
 

@@ -4,6 +4,9 @@
 <div class="well spaced" style="width:97%">
   <h2>{{ user.full_name }}</h2>
 
+<div id="prof_lft_col">
+    <div id="prof_pic"><img src="{{ user.profile_photo }}" width='10%'></div>
+</div>
     <p style="color:blue">Age: {{ user.age }}</p>
     <p style="color:blue">City: {{ user.city }}</p>
     <p style="color:blue">Bio: {{ user.user_bio }}</p>
@@ -31,7 +34,7 @@
                         }
                     }
                 );
-                document.location="/test_chat";
+                window.open("/test_chat");
             });
           // });
         });
