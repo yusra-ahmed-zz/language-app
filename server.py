@@ -183,14 +183,14 @@ def find_matches():
                   .filter(Userlang.user_id == user_id,
                           Userlang.fluent.is_(True))
                   .subquery())
-    print "blah", my_fluent_userlang_lang_ids
+
 
     ppl_ids_who_want_my_lang = (
         db.session.query(Userlang.user_id)
                   .filter(Userlang.fluent.is_(False),
                           Userlang.lang_id.in_(my_fluent_userlang_lang_ids))
                   .subquery())
-    print "blah2", ppl_ids_who_want_my_lang
+
 
     matches = (
         db.session.query(User)

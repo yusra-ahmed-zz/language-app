@@ -30,14 +30,14 @@
         console.log(result['users'][0]);
         if (result.length === 0) {
             $('#placeholder').html("Please type in a name");
-        } else {
-            for (var i = 0; i < result['users'].length; i++){
-                new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
-                console.log(new_user);
-                
-                $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+        }   else {
+                for (var i = 0; i < result['users'].length; i++){
+                    new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
+                    console.log(new_user);
+                    
+                    $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+                }
             }
-          }
     }
 
     function getPeople(evt) {
@@ -47,11 +47,14 @@
         $('#placeholder').html(" ");
         $.get('/get_user.json', data, showUser);
     }
+    
     $("#search-button").on('click', getPeople);
 
     </script>
 
-    <fieldset>
+    
+    <div class="container-fluid-filter">
+</div>
         <legend>Filter Users:</legend><br>
     <div class="filter-group">
         <label>
@@ -72,7 +75,7 @@
             <select name="city" id="city" class="filterusers">
                 <option value="--">--</option>
                 <option value="San-Jose">San Jose</option>
-                <option value="San-Francisco">San Francisco</option>
+                <option value="San Francisco">San Francisco</option>
                 <option value="Oakland">Oakland</option>
                 <option value="Fremont">Fremont</option>
                 <option value="Santa-Rosa">Santa Rosa</option>
@@ -83,12 +86,14 @@
     <br>
     <div class="filter-group">
         <button id="filter">Filter Users</button>
-        <div id="placeholder"></div>
     </div>
-    </fieldset>
-
     <div id="user-output-area"><!-- Matched profiles appear here -->
     </div>
+
+ 
+    </fieldset>
+
+    
 
     <script>
 
@@ -97,7 +102,7 @@
             $('#user-output-area').html("No Users Found");
         }
         for (var i = 0; i < results.length; i++){
-            var profile = '<a href="/user/'+results[i]["user_id"]+'">'+results[i]["photo"]+" "+results[i]["name"]+" | "+results[i]['city']+"</a><br>"
+            var profile = '<a href="/user/'+results[i]["user_id"]+'">'+ '<img src='+results[i]["photo"]+'">' +" "+results[i]["name"]+" | "+results[i]['city']+"</a><br>"
 
             $('#user-output-area').append(profile);
         }
@@ -114,6 +119,8 @@
     }
 
     $("#filter").on('click', getProfiles);
+    $("#profile_photo").on ('click', getProfiles);
+
 
     </script>
 
