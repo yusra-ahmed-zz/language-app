@@ -34,12 +34,12 @@ class User(db.Model, ToDictMixin):
     full_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(30), nullable=False, unique=True)
     email = db.Column(db.String(50), nullable=False, unique=True)
-    password = db.Column(db.String(30), nullable=False)
+    password = db.Column(db.String(250), nullable=False)
     age = db.Column(db.Integer, nullable=True)
     city = db.Column(db.String(30), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
     user_bio = db.Column(db.String(500), nullable=True)
-    profile_photo = db.Column(db.String(300), nullable=True)
+    profile_photo = db.Column(db.String(500), nullable=True)
 
 
     fluent_join = "and_(User.user_id==Userlang.user_id, Userlang.fluent==True)"

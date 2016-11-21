@@ -8,7 +8,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
 
 from model import connect_to_db, db, User, Language, Userlang
 import mandrill
-
+import bcrypt
 
 async_mode = None
 
@@ -44,14 +44,16 @@ def login_process():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    password_bytes = password.encode('utf-8')
 
     user = User.query.filter_by(email=email).first()
+    user_pw = user.password.encode('utf-8')
 
     if not user:
         flash("Incorrect email or password")
         return redirect("/")
 
-    if user.password != password:
+    if bcrypt.hashpw(password_bytes, user_pw) != user_pw:
         flash("Incorrect email or password")
         return redirect("/")
 
@@ -95,6 +97,9 @@ def register_process():
     zipcode = request.form.get("zipcode")
     user_bio = request.form.get("user_bio")
     profile_photo = request.form.get("profile_photo")
+    password_bytes = password.encode('utf-8')
+
+    hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
 
 
     user = User.query.filter_by(email=email).first()
@@ -106,7 +111,7 @@ def register_process():
         return redirect("/")
     else:
         user = User(full_name=full_name, email=email, username=username,
-                    password=password, age=age, city=city, zipcode=zipcode,
+                    password=hashed, age=age, city=city, zipcode=zipcode,
                     user_bio=user_bio, profile_photo=profile_photo)
         db.session.add(user)
         db.session.commit()
@@ -114,13 +119,11 @@ def register_process():
         send_email(user)
 
         user_id = User.query.filter(User.email == email).one().user_id
-        print user_id
+
         session['user_id'] = user_id
 
         lang_learn = request.form.get("lang_learn")
         lang_fluent = request.form.get("lang_fluent")
-        print "lang_learn", lang_learn
-        print "lang_fluent", lang_fluent
 
         practice = Userlang(user_id=user_id, lang_id=lang_learn,
                             fluent=False)
@@ -222,10 +225,6 @@ def find_matches():
 def show_all_users():
     """Shows all users on one page"""
 
-    #might need to put this in the dashboard route.
-    #access from Nav Bar
-    #need access to friends in Nav Bar eventually
-
     users = User.query.all()
     return render_template("all_users.html", users=users)
 
@@ -244,8 +243,6 @@ def user_profile_update():
 
     # Get user using user_id in session.
     user = User.query.get(session["user_id"])
-    # Get form input for user description, if it is not blank add the new
-    # description to the database.
 
     new_user_bio = request.form.get("user_bio")
     new_name = request.form.get("full_name")

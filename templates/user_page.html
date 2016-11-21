@@ -11,8 +11,6 @@
     <p style="color:blue">City: {{ user.city }}</p>
     <p style="color:blue">Bio: {{ user.user_bio }}</p>
 
-    <!-- <button type="button" class="btn btn-info btn-md" onclick="location.href='{{ user.email }}';">Send Email</a></button> -->
-
     <a href="mailto:{{ user.email }}">Send Email</a></button>
 
     <button id="chat">Chat with User</button>
@@ -21,9 +19,7 @@
           namespace = '/chat';
           var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
 
-          // socket.on('connect', function() {
-          //   socket.emit('join', { room: '{{ user.username }}' });
-
+          {% if "user_name" in session %}
             $("#chat").on("click", function() {
                 socket.emit('initiate_chat',
                     {
@@ -36,14 +32,9 @@
                 );
                 window.open("/test_chat");
             });
-          // });
+          {% endif %}
         });
 
     </script>
 
-
-<!-- User profiles would have:
-(1.0 Ability to send an email)
-(2.0, add to friends then chat?)
-(3.0, map showing zipcode area of user)-->
 {% endblock %}
