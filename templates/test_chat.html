@@ -1,3 +1,5 @@
+<link href="/static/css/chat.css" rel="stylesheet">
+
 {% extends 'base.html' %}
 
 {% block title %}Babilim Chat{% endblock %}
@@ -47,10 +49,12 @@
     </script>
 
     <body>
-        <h1>Chat it up</h1>
-        <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-        <input id="text" size="80" placeholder="Enter your message here"><br><br>
-        <a href="#" id="leave">Leave this conversation</a>
+        <h1>Babilim Chat</h1>
+        <div class="chatbox">
+            <textarea id="chat" cols="80" rows="20"></textarea><br><br>
+            <input id="text" size="80" placeholder="Enter your message here"><br><br>
+            <a href="#" id="leave">Leave this conversation</a>
+        </div>
     </body>
 </html>
 

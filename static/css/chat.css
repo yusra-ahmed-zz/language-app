@@ -1,0 +1,22 @@
+body {
+  padding-top: 0px;
+  background-image: url("http://utahdiversityconnections.com/wp-content/uploads/2014/11/6448_mountains_hd_wallpapers_clouds.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  opacity: 0.9;
+}
+
+#header {
+  padding: 0px 0px 20px 0px;
+  text-align: left;
+  font-family: "Georgia", "Serif";
+  font-style: oblique;
+  font-size: 30px;
+  color: #7a5252;
+}
+
+.chatbox {
+    text-align: center;
+    white-space: normal;
+    font-size: 15px
+}
