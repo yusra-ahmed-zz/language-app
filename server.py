@@ -254,6 +254,7 @@ def user_profile_update():
     new_zipcode = request.form.get("zipcode")
     new_lang_learn = request.form.get("lang_learn")
     new_photo = request.form.get("profile_photo")
+    new_password = request.form.get("password")
 
     user.user_bio = new_user_bio
     user.full_name = new_name
@@ -265,6 +266,12 @@ def user_profile_update():
     user.profile_photo = new_photo
     user_lang = Userlang.query.filter(Userlang.user_id==user.user_id, Userlang.fluent==False).one()
     user_lang.lang_id = int(new_lang_learn)
+
+    if new_password is not "":
+        password_bytes = new_password.encode('utf-8')
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        user.password = hashed
+
     db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
