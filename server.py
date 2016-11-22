@@ -47,11 +47,12 @@ def login_process():
     password_bytes = password.encode('utf-8')
 
     user = User.query.filter_by(email=email).first()
-    user_pw = user.password.encode('utf-8')
 
     if not user:
         flash("Incorrect email or password")
         return redirect("/")
+
+    user_pw = user.password.encode('utf-8')
 
     if bcrypt.hashpw(password_bytes, user_pw) != user_pw:
         flash("Incorrect email or password")
@@ -159,19 +160,19 @@ def get_users():
 
     search = request.args.get("search")
 
-    for item in search:
-        if item == 0:
-            return
-        else:
-            users = User.query.filter(User.full_name.like('%'+search+'%')).all()
+    # for item in search:
+    #     if item == 0:
+    #         return jsonify ([])
+    # users = User.query.filter(User.full_name.like('%'+search+'%')).all()
+    users = db.session.query(User.user_id, User.full_name).filter(User.full_name.like('%'+search+'%')).all()
 
-            userinfo = {"users": []}
+    userinfo = {"users": users}
 
-            for user in users:
-                userlist = [user.user_id, user.full_name]
-                userinfo["users"].append(userlist)
-            print "search feature", userinfo
-            return jsonify(userinfo)
+    # for user in users:
+    #     userlist = [user.user_id, user.full_name]
+    #     userinfo["users"].append(userlist)
+    print "search feature", userinfo
+    return jsonify(userinfo)
 
 
 @app.route('/find_matches.json')

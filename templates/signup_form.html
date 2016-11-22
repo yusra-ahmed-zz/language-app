@@ -3,7 +3,7 @@
     <title>Signup Form</title>
 </head>
 <body>
-    <!-- <div style="display:inline"> -->
+<div style="display:inline">
     <div class="modal fade" id="SignupModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -15,28 +15,29 @@
                     <form id="signup" action="/signup" method="POST">
                         <label>
                             Full Name
-                            <input type="text" value="Yusra" name="full_name" class="form-control" required>
+                            <input type="text" placeholder="Full Name" name="full_name" class="form-control" required>
                         </label>
                         <label>
                             Email
-                            <input type="email" value="yusra@yusra.com" name="email" class="form-control" required>
+                            <input type="email" placeholder="Email" name="email" class="form-control" required>
                         </label>
                         <label>
                             Username
-                            <input type="text" value="yusra" name="username" class="form-control" required>
+                            <input type="text" placeholder="Username" name="username" class="form-control" required>
                         </label>
                         <label>
                             Password
-                            <input type="password" value="yusra" name="password" class="form-control" required>
+                            <input type="password" placeholder="Password" name="password" class="form-control" required>
                         </label>
                         <label>
                             Age
-                            <input type="number" value="29" name="age" class="form-control">
+                            <input type="number" placeholder="Age" name="age" class="form-control">
                         </label>
                         <label>
                             City
                             <select name="city" required>
-                                <option selected value="San Francisco">San Francisco</option>
+                                <option value=" "></option>
+                                <option value="San Francisco">San Francisco</option>
                                 <option value="San Jose">San Jose</option>
                                 <option value="Oakland">Oakland</option>
                                 <option value="Fremont">Fremont</option>
@@ -46,16 +47,15 @@
                         </label>
                         <label>
                             Zipcode
-                            <input type="number" value="94123" name="zipcode" class="form-control" required>
+                            <input type="text" placeholder="Zipcode" name="zipcode" class="form-control" required>
                         </label>
                         <label>
-                            Which language are you learning?
+                            Select one language you're currently learning:
                             <select name="lang_learn" required>
                                 {% for language in languages %}
                                     <option value = "{{ language.lang_id }}">{{ language.lang_name }}</option>
                                 {% endfor %}
                             </select>
-                            <p>*Please provide us with one language you're learning currently.</p>
                         </label>
                         <label>
                             Select the first language in which you're fluent:
@@ -66,18 +66,18 @@
                                     </option>
                                 {% endfor %}
                             </select>
-                            <p>*Please provide us with one language you're fluent in.</p>
                         </label>
                         <label>
                             <p>Please share a little about yourself:</p>
                             <div>
-                                <textarea name="user_bio"></textarea>
+                                <textarea name="user_bio" cols="50" rows="5"></textarea>
                             </div>
                         </label>
+                        <br>
                         <label>
-                            <p>Please provide an image url:</p>
-                            <div>
-                                <textarea name="profile_photo"></textarea>
+                            <p>Please provide an image url for your profile photo:</p>
+                                <input id="text" name="profile_photo" size="60" class="form-control" placeholder="Profile Photo URL">
+                        </label>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         <button type="button submit" form="signup" class="btn btn-primary">Register</button>
@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-<!-- </div> -->
+</div>
 
 </body>
 </html>

@@ -21,6 +21,8 @@
                             <input type="email" value="{{ user.email }}" name="email" class="form-control" required><br>
                         <label for="username">Username:</label>
                             <input type="text" value="{{ user.username }}" name="username" class="form-control" required><br>
+                        <label for="password">Update Password:</label>
+                            <input type="password" value="" name="password" class="form-control"><br>
                         <label for="age">Age:</label>
                             <input type="number" value="{{ user.age }}" name="age" class="form-control"><br>
                         <label for="city">City:</label>
@@ -52,7 +54,7 @@
                         <label for="profile_photo">Update your photo url:</label>
                         <input type="text" class="form-control" value="{{ user.profile_photo }}" rows = 1 name="profile_photo"><br>
                     <button class="btn btn-default profile_submit" type="submit">Update Your Profile</button>
-                    <a data-dismiss="modal" aria-label="Close" class="invite_cancel">Cancel</a>
+                    <a href="#" data-dismiss="modal" aria-label="Close" class="invite_cancel">Cancel</a>
                     <br>
               </form>
             </div> <!-- update profile  -->
