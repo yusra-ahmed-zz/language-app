@@ -8,10 +8,11 @@
 
 <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#user_profile">Update/View Profile</a></button>
 
-    <input type="search" name="search" id="search">
-    <button id="search-button">Search People</button>
-    <div id="placeholder"></div>
+<!--     <input type="search" name="search" id="search" placeholder="Search People">
+    <button id="search-button" i class="glyphicon glyphicon-search"></button>
+    <div id="placeholder"></div> -->
 
+<script type="text/javascript" src="/static/js/twitter-bootstrap.js"></script>
 
 {% include 'my_profile.html' %}
 
@@ -31,22 +32,22 @@
     function showUser(result) {
         console.log(result['users']);
         if (result['users'].length === 0) {
-            $('#placeholder').html("No user found");
+            $('.typeahead').html("No user found");
         }   else {
                 for (var i = 0; i < result['users'].length; i++){
                     new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
                     console.log(new_user);
                     
-                    $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+                    $('.typeahead').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
                 }
             }
     }
 
     function getPeople(evt) {
 
-        $('#placeholder').html("");
+        $('.typeahead').html("");
         if ($('#search').val() === ""){
-            $('#placeholder').html("Please type in a name");
+            $('.typeahead').html("");
         }
         else {
             var data = {
@@ -55,8 +56,25 @@
             $.get('/get_user.json', data, showUser);
         }
     }
-    $("#search").on('keyup', getPeople);
+    // $("#search").on('keyup', getPeople);
+    $(document).ready(function(){
+        // Sonstructs the suggestion engine
+        var foundUsers = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            // The url points to a json file that contains an array of country names
+            prefetch: '/get_user.json'
+        });
+        
+        // Initializing the typeahead with remote dataset without highlighting
+        $('.typeahead').typeahead(null, {
+            name: 'foundUsers',
+            source: foundUsers,
+            limit: 2 /* Specify max number of suggestions to be displayed */
+        });
+    }); 
     $("#search-button").on('click', getPeople);
+
 
     </script>
 

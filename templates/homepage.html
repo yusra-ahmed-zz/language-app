@@ -1,40 +1,58 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h1>Babilim</h1>
-<p>Some tagline, or slogan, or discription about my app</p>
-
-<div class="well spaced" style="width:40%;">
-    <div>
-        <h3>Login</h3>
-        <form action='/' method="POST">
-
-            <div class="form-group">
-                <label>Email:
-                    <input type="email" name="email" required class="form-control">
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label>Password:
-                    <input type="password" name="password" required class="form-control">
-                </label>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Log In" class="btn btn-danger">
-            </div>
-
-        </form>
-    </div>
+<link href="/static/css/homepage.css" rel="stylesheet">
+<div id="bg">
+  <img src="/static/img/globe.jpg" alt="">
 </div>
-
-
-
-<h4>New to Babilim? <button type="button" class="btn btn-info btn-md" data-toggle="modal"data-target="#SignupModal">Sign Up!</button></h4>
-
-{% include 'signup_form.html' %}
-
-
+    <div class='homepage'>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-4 col-sm-8 col-md-5 offset-4">
+              <h1>Babilim</h1>
+            </div>
+          </div>
+          <div class ="row">
+            <div class="col-xs-8 offset-4 col-sm-8 col-md-8 col-lg-8">
+              <h3>A friendly approach to foreign languages</h3>
+            </div>
+          </div>
+          <br>
+          <div class ="row">
+            <div class = "col-xs-8 offset-4 col-md-3 col-lg-3">
+                <form action='/' method="POST" id="contactForm">
+                    <div class="form-group">
+                        <label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                </span>
+                                <input type="email" name="email" required placeholder="email" class="form-control transparent-input">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-lock"></i>
+                                </span>
+                                <input type="password" name="password" placeholder=
+                                "password"required class="form-control transparent-input">
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Log In" class="btn btn-success btn-lg transparent-input">
+                    </div>
+                </form>
+                <button type="button" class="btn btn-warning btn-md" data-toggle="modal"data-target="#SignupModal">Create Account</button>
+                
+            </div>
+          </div>
+        </div>
+    </div>
 
 {% endblock %}
+
+{% include 'signup_form.html' %}

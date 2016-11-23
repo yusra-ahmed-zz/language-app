@@ -3,7 +3,7 @@
     <title>Signup Form</title>
 </head>
 <body>
-<div style="display:inline">
+<!-- <div style="display:inline"> -->
     <div class="modal fade" id="SignupModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -80,27 +80,14 @@
                         </label>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button submit" form="signup" class="btn btn-primary">Register</button>
+                        <button type="button submit" form="signup" class="btn btn-success">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->
 
 </body>
 </html>
-
-<script>
-function showRegistration(result) {
-    alert(result);
-}
-function submitRegistration(evt) {
-    // evt.preventDefault():
-    var formValues = $("#signup").serialize();
-    $.post("/signup", formValues, showRegistration);
-}
-$("#signup").on("signup", submitRegistration);
-// Redundant jquery code? Talk to Katie about this later.
-</script>

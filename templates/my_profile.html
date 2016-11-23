@@ -13,7 +13,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title" id="user_label">{{ user.full_name }}</h3>
                 </div>
-                <div class="modal-body">     
+                <div class="modal-body">
+                  <div class="row-fluid">     
                     <form action="/user_profile_update" method="POST" id="update_user_submit"> 
                         <label for="full_name">Full Name:</label>
                             <input type="text" name="full_name" id="full_name" class="form-control" value="{{ user.full_name }}" required><br>
@@ -56,6 +57,8 @@
                     <button class="btn btn-default profile_submit" type="submit">Update Your Profile</button>
                     <a href="#" data-dismiss="modal" aria-label="Close" class="invite_cancel">Cancel</a>
                     <br>
+                  </div>
+                </div>
               </form>
             </div> <!-- update profile  -->
           </div> <!-- modal-body  -->

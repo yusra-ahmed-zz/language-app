@@ -60,6 +60,11 @@ class IntegrationTests(unittest.TestCase):
         result = self.client.get("/user/1")
         self.assertIn("Yusra", result.data)
 
+    def test_chat_route(self):
+        """Test chat page render"""
+
+        result = self.client.get("/")
+
 
     def test_logout(self):
         """Test logout functionality"""
