@@ -25,7 +25,7 @@
       socket.on('chat_request', function(msg){
         console.log(msg);
         if (window.confirm("Message from: " + msg.sender))
-        window.open('/test_chat')
+        window.open('/chat')
       });
     });
       
@@ -46,11 +46,22 @@
 
    
         <!-- Flashed messages show up here -->
+    <div id="flash-container">
         {% with messages = get_flashed_messages() %}
             {% for message in messages %}
                 <div class="alert alert-warning">{{ message }}</div>
             {% endfor %}
         {% endwith %}
+    </div>
+
+    <script>
+        var flashContainer = document.getElementById('flash-container');
+            setTimeout(function() {
+                while (flashContainer.firstChild) {
+                    flashContainer.removeChild(flashContainer.firstChild);
+                }
+            }, 2500);
+    </script>
 
 
 {% block body %} 

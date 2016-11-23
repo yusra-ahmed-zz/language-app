@@ -10,7 +10,7 @@
             namespace = '/chat';
             var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
             socket.on('connect', function() {
-              socket.emit('join', {'room': '/test_chat'});
+              socket.emit('join', {'room': '/chat'});
             });
             socket.on('room_message', function(data) {
 
@@ -27,7 +27,7 @@
                     $('#text').val('');
                     socket.emit('send_to_room',
                         {
-                            room: '/test_chat',
+                            room: '/chat',
                             data: {
                                 sender: "{{ session.user_name }}",
                                 text: text

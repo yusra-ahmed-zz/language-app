@@ -92,14 +92,23 @@ class Userlang(db.Model):
 
 ##############################################################################
 # Helper functions
-# def example_data():
-#     """create some sample data"""
+def example_data():
+    """create some sample data"""
 
-#     ex_user = User(user_id=1, full_name="Yusra", username="yusra", email="yusra@yusra.com",
-#             password="yusra", age=29, city="San Francisco", zipcode="94123", user_bio="blah")
-#     ex_lang = Language(lang_id=1, lang_name="Arabic")
+        # In case this is run more than once, empty out existing data
+    User.query.delete()
+    Language.query.delete()
+    Userlang.query.delete()
 
-#     ex_userlang = Userlang(userlang_id=1, user_id=1, lang_id=1, fluent=False)
+    ex_user = User(user_id=1, full_name="Yusra", username="yusra", email="yusra@yusra.com",
+            password="yusra", age=29, city="San Francisco", zipcode="94123", user_bio="blah",
+            profile_photo="blah")
+    ex_lang = Language(lang_id=1, lang_name="Arabic")
+
+    ex_userlang = Userlang(userlang_id=1, user_id=1, lang_id=1, fluent=False)
+
+    db.session.add_all([ex_user, ex_lang, ex_userlang])
+    db.session.commit()
 
 def connect_to_db(app, db_URI='postgresql:///userlangs'):
     """Connect the database to our Flask app."""

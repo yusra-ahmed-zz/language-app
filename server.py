@@ -266,13 +266,13 @@ def user_profile_update():
     user.profile_photo = new_photo
     user_lang = Userlang.query.filter(Userlang.user_id==user.user_id, Userlang.fluent==False).one()
     user_lang.lang_id = int(new_lang_learn)
+    db.session.commit()
 
-    if new_password is not "":
+    if new_password:
         password_bytes = new_password.encode('utf-8')
         hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
         user.password = hashed
-
-    db.session.commit()
+        db.session.commit()
 
     # Flash profile update success and redirect to user homepage.
     flash("Your profile has been updated!")
@@ -294,11 +294,11 @@ def send_email(user):
 
     result = mandrill_client.messages.send(message=message)
 
-@app.route('/test_chat')
-def test_chat():
+@app.route('/chat')
+def app_chat():
     # write function that creates uuid(uuid-4) after user b creates connection
     # update urls to /test_chat/{uuid-4}
-    return render_template('test_chat.html', async_mode=socketio.async_mode)
+    return render_template('chat.html', async_mode=socketio.async_mode)
 
 @socketio.on('join', namespace='/chat')
 def join(message):
