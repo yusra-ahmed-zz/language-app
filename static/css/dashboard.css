@@ -1,3 +1,20 @@
 .picture {
     width: 150px;
 }
+
+/*   Sitewide  */
+.navbar-default {
+    background-color: #0e0e0e !important;
+    border-color: #e7e7e7;
+}
+
+.navbar-brand {
+    padding-top: 20px !important;
+    font-size: 42px !important;
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.navbar-default .navbar-nav>li>a {
+    font-size: 20px;
+
+}

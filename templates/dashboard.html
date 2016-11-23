@@ -5,9 +5,6 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-
-<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#user_profile">Update/View Profile</a></button>
-
 <!--     <input type="search" name="search" id="search" placeholder="Search People">
     <button id="search-button" i class="glyphicon glyphicon-search"></button>
     <div id="placeholder"></div> -->
@@ -32,22 +29,22 @@
     function showUser(result) {
         console.log(result['users']);
         if (result['users'].length === 0) {
-            $('.typeahead').html("No user found");
+            $('#result').html("No user found");
         }   else {
                 for (var i = 0; i < result['users'].length; i++){
                     new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
                     console.log(new_user);
                     
-                    $('.typeahead').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+                    $('#result').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
                 }
             }
     }
 
     function getPeople(evt) {
 
-        $('.typeahead').html("");
+        $('#result').html("");
         if ($('#search').val() === ""){
-            $('.typeahead').html("");
+            $('#result').html("");
         }
         else {
             var data = {
@@ -56,23 +53,7 @@
             $.get('/get_user.json', data, showUser);
         }
     }
-    // $("#search").on('keyup', getPeople);
-    $(document).ready(function(){
-        // Sonstructs the suggestion engine
-        var foundUsers = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // The url points to a json file that contains an array of country names
-            prefetch: '/get_user.json'
-        });
-        
-        // Initializing the typeahead with remote dataset without highlighting
-        $('.typeahead').typeahead(null, {
-            name: 'foundUsers',
-            source: foundUsers,
-            limit: 2 /* Specify max number of suggestions to be displayed */
-        });
-    }); 
+    $("#search").on('keyup', getPeople);
     $("#search-button").on('click', getPeople);
 
 

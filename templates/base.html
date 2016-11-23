@@ -9,6 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+  <script src="jquery.tokeninput.js"></script>
+  <link rel="stylesheet" type="text/css" href="token-input.css" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 
   <script type="text/javascript">
@@ -45,39 +47,41 @@
         </li>
         {% endif %} -->
       <!--Navigation code adapted from Bootstrap example-->
-  {% if "user_id" in session %}
+{% if "user_id" in session %}
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-expanded="false">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/dashboard"><div><img src="/static/img/noun_741.svg" class="farmlogo" width="31px"></div></a>
-          <a class="navbar-brand logotext" href="/dashboard">Babilim</a>
+          <!-- <a class="navbar-brand" href="/dashboard"><img src="/static/img/logo-globe.jpg" class="globe-logo" width="32px"></a> -->
+          <a class="navbar-brand" href="/dashboard">Babilim</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav">
-          </ul>
+        <div id="navbar" class="navbar-collapse collapse">
           
           <ul class="nav navbar-nav navbar-right">
             <form class="navbar-form navbar-left">
-              <div class="form-group" id="prefetch">
-                <input type="search" autocomplete="off" class="form-control" placeholder="Search People" id="search">
+              <div class="form-group">
+                <label>
+                <input type="text" autocomplete="off" class="form-control" placeholder="Search People" id="search" list="result"></input>
+                <datalist id="result"></datalist>
+                <!-- <ul class="result" id="result">
+                </ul> -->
                 <!-- <div id="placeholder"></div> -->
               </div>
-              <button type="submit" class="btn btn-default" id="search-button" aria-label="Click to search"><span id="search-people" class='glyphicon glyphicon-search' aria-hidden='true'></span></button>
+              <button type="submit" class="btn btn-default btn-md" id="search-button" aria-label="Click to search"><span id="search-people" class='glyphicon glyphicon-search' aria-hidden='true'></span></button>
+              <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#user_profile">Update/View Profile</a></button>
             </form>
             <li><a href="/logout">Log Out</a>
           </ul>
         </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
     </nav>
+  </div><!-- /.container-fluid -->
   {% endif %}
 
 
@@ -99,7 +103,7 @@
                 while (flashContainer.firstChild) {
                     flashContainer.removeChild(flashContainer.firstChild);
                 }
-            }, 2500);
+            }, 1500);
     </script>
 
 
