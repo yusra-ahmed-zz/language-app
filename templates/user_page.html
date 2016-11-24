@@ -1,40 +1,47 @@
 {% extends 'base.html' %}
 {% block body %}
-<br>
-<div class="well spaced" style="width:97%">
-  <h2>{{ user.full_name }}</h2>
 
-<div id="prof_lft_col">
-    <div id="prof_pic"><img src="{{ user.profile_photo }}" width='20%'></div>
+<link href="/static/css/user-page.css" rel="stylesheet">
+
+<div class="container-fluid">
+  <div class="row top-buffer" id="user-row">
+    <section class="col-xs-12 col-md-6 col-lg-4">
+      
+      <div id="prof_pic"><img src="{{ user.profile_photo }}" width="70%" class="img-responsive center-block" id="user-img"></div>
+
+    </section>
+    <section class="col-xs-12 col-md-6">
+        <h2>{{ user.full_name }}</h2>
+        <p style="color:black">Age: {{ user.age }}</p>
+        <p style="color:black">City: {{ user.city }}</p>
+        <p style="color:black">Bio: {{ user.user_bio }}</p>
+        <br>
+        <a href="mailto:{{ user.email }}" class="btn btn-primary btn-md">Email {{ user.full_name.split(' ', 1)[0] }}</a>
+
+        <button type="button" id="chat" class="btn btn-success btn-md">Chat with {{ user.full_name.split(' ', 1)[0] }}</button>
+    </section>
+  </div>
 </div>
-    <p style="color:blue">Age: {{ user.age }}</p>
-    <p style="color:blue">City: {{ user.city }}</p>
-    <p style="color:blue">Bio: {{ user.user_bio }}</p>
+<script type="text/javascript">
+    $(document).ready(function() {
+      namespace = '/chat';
+      var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
 
-    <a href="mailto:{{ user.email }}">Send Email</a></button>
-
-    <button id="chat">Chat with User</button>
-    <script type="text/javascript">
-        $(document).ready(function() {
-          namespace = '/chat';
-          var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
-
-          {% if "user_name" in session %}
-            $("#chat").on("click", function() {
-                socket.emit('initiate_chat',
-                    {
-                        user: '{{ user.username }}',
-                        data: {
-                            sender: "{{ session.user_name }}",
-                            text: "whatever"
-                        }
+      {% if "user_name" in session %}
+        $("#chat").on("click", function() {
+            socket.emit('initiate_chat',
+                {
+                    user: '{{ user.username }}',
+                    data: {
+                        sender: "{{ session.user_name }}",
+                        text: "whatever"
                     }
-                );
-                window.open("/chat");
-            });
-          {% endif %}
+                }
+            );
+            window.open("/chat");
         });
-
-    </script>
+      {% endif %}
+    });
+</script>
 
 {% endblock %}

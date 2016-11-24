@@ -5,37 +5,37 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<!--     <input type="search" name="search" id="search" placeholder="Search People">
-    <button id="search-button" i class="glyphicon glyphicon-search"></button>
-    <div id="placeholder"></div> -->
 
 <script type="text/javascript" src="/static/js/twitter-bootstrap.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
 
 {% include 'my_profile.html' %}
+<!-- <input type="search" name="search" id="search" placeholder="Search People">
+<button id="search-button" i class="glyphicon glyphicon-search"></button>
+<div id="placeholder"></div> -->
 
     <script>
 
     function showUser(result) {
         console.log(result['users']);
         if (result['users'].length === 0) {
-            $('#result').html("No user found");
+            $('#placeholder').html("No user found");
         }   else {
                 for (var i = 0; i < result['users'].length; i++){
                     new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
                     console.log(new_user);
                     
-                    $('#result').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+                    $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
                 }
             }
     }
 
     function getPeople(evt) {
 
-        $('#result').html("");
+        $('#placeholder').html("");
         if ($('#search').val() === ""){
-            $('#result').html("");
+            $('#placeholder').html("");
         }
         else {
             var data = {
