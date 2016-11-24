@@ -8,8 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Hammersmith+One|Lato" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
-  <script src="jquery.tokeninput.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="token-input.css" />
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
   <link href="/static/css/dashboard.css" rel="stylesheet">
@@ -51,20 +50,19 @@
           </button>
           <a class="navbar-brand" href="/dashboard">Babilim</a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div id="navbar" class="navbar-collapse collapse">
-          
-          <ul class="nav navbar-nav navbar-right">
-            <form class="navbar-form navbar-left">
-              <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#user_profile">View/Update My Profile</a></button>
-                <label>
-                <input type="search" autocomplete="off" class="form-control" placeholder="Search by name..." id="search"></input>
-                <div id="placeholder"></div>
-              </label>   
-            </form>
-            <li><a href="/logout">Log Out</a>
-          </ul>
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+          <div class="nav navbar-nav navbar-form dropdown navbar-right">
+            <!-- <ul class="nav navbar-nav navbar-right"> -->
+              <!-- <form class="navbar-form navbar-right"> -->
+                <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#user_profile">View/Update My Profile</a></button>
+                  <label> 
+                    <input id="search_input" data-toggle="dropdown" type="search" class="form-control" placeholder="Search People" autofocus="autofocus" autocomplete="off" onkeyup="checkTextField();">
+                    <ul id="search_results" class="dropdown-menu" role="menu">
+                    </ul>
+                  </label>
+                <a href="/logout" id="logout" class="btn btn-md transparent-input">Log Out</a>     
+          </div>
         </div><!-- /.navbar-collapse -->
     </nav>
   </div><!-- /.container-fluid -->

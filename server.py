@@ -335,11 +335,11 @@ if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension
     # Do not debug for demo
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
     # , passthrough_errors=False
-    socketio.run(app, debug=False, host='0.0.0.0', port=5001)
+    socketio.run(app, debug=True, host='0.0.0.0', port=5001)

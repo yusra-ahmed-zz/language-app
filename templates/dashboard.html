@@ -20,32 +20,32 @@
     function showUser(result) {
         console.log(result['users']);
         if (result['users'].length === 0) {
-            $('#placeholder').html("No user found");
+            $('#search_results').html("No user found");
         }   else {
                 for (var i = 0; i < result['users'].length; i++){
                     new_user = '<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>"
                     console.log(new_user);
                     
-                    $('#placeholder').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
+                    $('#search_results').append('<a href="/user/'+result['users'][i][0]+'">'+result['users'][i][1]+"</a><br>")
                 }
             }
     }
-
+    
     function getPeople(evt) {
 
-        $('#placeholder').html("");
-        if ($('#search').val() === ""){
-            $('#placeholder').html("");
+        $('#search_results').html("");
+        if ($('#search_input').val() === ""){
+            $('#search_results').html("Please type in a name");
         }
         else {
             var data = {
-             "search": $('#search').val()
+             "search": $('#search_input').val()
              };
             $.get('/get_user.json', data, showUser);
         }
     }
-    $("#search").on('keyup', getPeople);
-    $("#search-button").on('click', getPeople);
+    $("#search_input").on('keyup', getPeople);
+    // $("#search-button").on('click', getPeople);
 
 
     </script>
