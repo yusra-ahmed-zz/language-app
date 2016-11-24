@@ -1,4 +1,4 @@
-<link href="/static/css/dashboard.css" rel="stylesheet">
+
 
 {% extends 'base.html' %}
 
@@ -10,21 +10,12 @@
     <div id="placeholder"></div> -->
 
 <script type="text/javascript" src="/static/js/twitter-bootstrap.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
 
 {% include 'my_profile.html' %}
 
-
-    <div id="prof_lft_col">
-    <div id="prof_pic"><img src="{{ user.profile_photo }}" width='20%'></div>
-    </div>
-
-    <h2>Welcome, {{ user.full_name }}!</h2>
-    <h4>Search for a Language Partner</h4>
-    <p>Find your partner by selecting your languages and city.</p>
-
     <script>
-
-
 
     function showUser(result) {
         console.log(result['users']);
@@ -59,41 +50,53 @@
 
     </script>
 
-    
-    <legend>Filter Users:</legend><br>
-    <div class="filter-group">
-        <label>
-            Select the language you're learning:
-            <select name="lang_learn" id="lang_learn" class="filterusers">
-                {% for language in languages %}
-                    <option value = "{{ language.lang_id }}">
-                        {{ language.lang_name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </label>
+    <div class="container-fluid">
+        <div class="row" id="main-row">
+            <section class="col-xs-12 col-md-6 col-lg-6 main" id="main">
+                <img src="{{ user.profile_photo }}" width="60%" class="img-responsive center-block" id="img-circle">
+            </section>
+            <section class="col-xs-12 col-md-6 col-lg-6 main" id="main">
+                <h2>Welcome, {{ user.full_name }}!</h2><br>
+                <p>Connect with new friends by selecting the language you're learning<br> and the city of your choice. You'll be matched with people who are fluent in the language you're learning and are in turn learning the language in which you're fluent.</p>
+                </br>
+                <div class="filter-group">
+                    <label>
+                        <select class="selectpicker" data-width="300px" name="lang_learn" id="lang_learn">
+                            {% for language in languages %}
+                                <option value = "{{ language.lang_id }}">
+                                    {{ language.lang_name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <div class="filter-group">
+                    <label>
+                        <select name="city" id="city" class="selectpicker" data-width="300px">
+                            <option value="San Francisco">San Francisco</option>
+                            <option value="San-Jose">San Jose</option>
+                            <option value="Oakland">Oakland</option>
+                            <option value="Fremont">Fremont</option>
+                            <option value="Santa-Rosa">Santa Rosa</option>
+                            <option value="Berkeley">Berkeley</option>
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <div class="filter-group">
+                    <button type="button" class="btn btn-info btn-md" id="filter">Filter Users</button><br>
+                </div>
+                <br>
+            </section>
+        </div>
+        <div class="row" id="main-row">
+            <section class="col-xs-12 col-md-6 col-lg-6 col-lg-offset-6" id="secondary-view">
+                <div id="user-output-area" box-sizing="border-box"></div><!-- Matched profiles appear here -->
+            </section>
+        </div>       
     </div>
-    <br>
-    <div class="filter-group">
-        <label>
-            Select the city to filter users by:
-            <select name="city" id="city" class="filterusers">
-                <option value="--"></option>
-                <option value="San-Jose">San Jose</option>
-                <option value="San Francisco">San Francisco</option>
-                <option value="Oakland">Oakland</option>
-                <option value="Fremont">Fremont</option>
-                <option value="Santa-Rosa">Santa Rosa</option>
-                <option value="Berkeley">Berkeley</option>
-            </select>
-        </label>
-    </div>
-    <br>
-    <div class="filter-group">
-        <button id="filter">Filter Users</button><br>
-    </div>
-    <div id="user-output-area"><!-- Matched profiles appear here -->
-    </div>
+                
 
     
 
@@ -106,8 +109,6 @@
         for (var i = 0; i < results.length; i++){
             var profile = '<a href="/user/'+results[i]["user_id"]+'">'+'<img class="picture" src='+results[i]["photo"]+'>' +"  "+results[i]["name"]+" | "+results[i]['city']+"</a><br><br>"
             
-            // $('.picture').css({'width':'150px','height':'150px'})
-
             $('#user-output-area').append(profile);
         }
     }

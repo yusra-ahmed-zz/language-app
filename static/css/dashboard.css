@@ -1,8 +1,8 @@
 .picture {
-    width: 150px;
+    width: 45px;
+    border-radius: 50%;
 }
 
-/*   Sitewide  */
 .navbar-default {
     background-color: #0e0e0e !important;
     border-color: #e7e7e7;
@@ -17,4 +17,8 @@
 .navbar-default .navbar-nav>li>a {
     font-size: 20px;
 
+}
+
+#img-circle {
+    border-radius: 3%;
 }
