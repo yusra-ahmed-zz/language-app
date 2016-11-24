@@ -3,7 +3,6 @@ body {
   background-image:;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  opacity: 0.9;
 }
 
 #header {
@@ -18,8 +17,57 @@ body {
 .chatbox {
     text-align: center;
     white-space: normal;
-    font-size: 15px;
+    font-size: 18;
     font-family: 'Lato', sans-serif;
 }
 
-#chat
+textarea {
+    width: 60%;
+    height: 450px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    resize: none;
+}
+
+input {
+    width: 60%;
+    height: 10px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    resize: none;
+}
+
+a.transparent-input {
+   background-color: rgba(0, 0, 0, 0);
+   border-color: white;
+   color: white !important;
+   font-style: oblique;
+   font-size: 14;
+   font-weight: bolder;
+}
+
+#world {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -1;
+}
+#world img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+  opacity: 0.8;
+}

@@ -5,7 +5,11 @@
 {% block title %}Babilim Chat{% endblock %}
 
 {% block body %}
+<div id="world">
+  <img src="/static/img/globe.jpg" alt="">
+</div>
     <script type="text/javascript" charset="utf-8">
+
         $(document).ready(function() {
             namespace = '/chat';
             var socket = io.connect('http://'+ document.domain + ':' + location.port + namespace);
@@ -50,9 +54,9 @@
 
     <body>
         <div class="chatbox">
-            <textarea id="chat" cols="80" rows="20"></textarea><br><br>
-            <input id="text" size="80" placeholder="Enter your message here"><br><br>
-            <a href="#" id="leave">Leave this conversation</a>
+            <textarea id="chat"></textarea><br><br>
+            <input id="text" size="80" placeholder="Enter your messages here"><br><br>
+            <a href="#" class="btn btn-md transparent-input" id="leave">Leave this conversation</a>
         </div>
     </body>
 </html>

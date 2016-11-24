@@ -5,13 +5,14 @@
 
 .navbar-default {
     background-color: #0e0e0e !important;
-    border-color: #e7e7e7;
+    border-color: black;
 }
 
 .navbar-brand {
     padding-top: 20px !important;
     font-size: 42px !important;
     font-family: 'Hammersmith One', sans-serif;
+    color: #f9f9f4 !important;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -21,4 +22,28 @@
 
 #img-circle {
     border-radius: 3%;
+}
+
+.top-buffer { 
+    margin-top: 80px;
+    margin-left: 5px;
+    margin-bottom: 100px !important;
+ }
+
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;
+    color: white;
+    background-size: 50px;
+}
+
+.glyphicon.glyphicon-user {
+    font-size: 24px;
+    padding-top: 4px;
+    padding-left: 14px;
+    padding-bottom: 1%;
 }

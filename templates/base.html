@@ -34,20 +34,11 @@
       });
     });
       
-// alert("Message from: " + msg.sender);
   </script>
 
 </head>
 <body>
 
-<!--         {% if "user_id" in session %}
-        <li>
-          <a href="/logout">Log Out</a>
-          <a href="/dashboard">Dashboard</a>
-
-        </li>
-        {% endif %} -->
-      <!--Navigation code adapted from Bootstrap example-->
 {% if "user_id" in session %}
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -58,7 +49,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!-- <a class="navbar-brand" href="/dashboard"><img src="/static/img/logo-globe.jpg" class="globe-logo" width="32px"></a> -->
           <a class="navbar-brand" href="/dashboard">Babilim</a>
         </div>
 
@@ -67,16 +57,11 @@
           
           <ul class="nav navbar-nav navbar-right">
             <form class="navbar-form navbar-left">
-              <div class="form-group">
+              <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#user_profile">View/Update My Profile</a></button>
                 <label>
-                <input type="text" autocomplete="off" class="form-control" placeholder="Search by name..." id="search" list="result"></input>
-                <!-- <datalist id="result"></datalist>
-                <ul class="result" id="result">
-                </ul> -->
+                <input type="search" autocomplete="off" class="form-control" placeholder="Search by name..." id="search"></input>
                 <div id="placeholder"></div>
-              </div>
-              <button type="submit" class="btn btn-default btn-md" id="search-button" aria-label="Click to search"><span id="search-people" class='glyphicon glyphicon-search' aria-hidden='true'></span></button>
-              <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-target="#user_profile">Update/View Profile</a></button>
+              </label>   
             </form>
             <li><a href="/logout">Log Out</a>
           </ul>
