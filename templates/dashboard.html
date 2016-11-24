@@ -30,7 +30,7 @@
                 }
             }
     }
-    
+
     function getPeople(evt) {
 
         $('#search_results').html("");
@@ -56,7 +56,7 @@
                 <img src="{{ user.profile_photo }}" width="60%" class="img-responsive center-block" id="img-circle">
             </section>
             <section class="col-xs-12 col-md-6 col-lg-6 main" id="main">
-                <h2>Welcome, {{ user.full_name }}!</h2><br>
+                <h2>Welcome, {{ user.full_name.split(' ', 1)[0] }}!</h2><br>
                 <p>Connect with new friends by selecting the language you're learning<br> and the city of your choice. You'll be matched with people who are fluent in the language you're learning and are in turn learning the language in which you're fluent.</p>
                 </br>
                 <div class="filter-group">
@@ -90,10 +90,11 @@
                 <br>
             </section>
         </div>
-        <div class="row" id="main-row">
-            <section class="col-xs-12 col-md-6 col-lg-6 col-lg-offset-6" id="secondary-view">
+            <div style="width:700px; display:inline">
+            <section class="col-xs-12 col-md-6 col-lg-6 main" id="main">
                 <div id="user-output-area" box-sizing="border-box"></div><!-- Matched profiles appear here -->
             </section>
+        </div>
         </div>       
     </div>
                 

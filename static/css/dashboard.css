@@ -1,5 +1,5 @@
 .picture {
-    width: 45px;
+    width: 70px;
     border-radius: 50%;
 }
 
@@ -21,7 +21,7 @@
 }
 
 #img-circle {
-    border-radius: 3%;
+    border-radius: 8%;
 }
 
 .top-buffer { 
