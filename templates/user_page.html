@@ -14,7 +14,12 @@
         <h2>{{ user.full_name }}</h2>
         <p style="color:black">Age: {{ user.age }}</p>
         <p style="color:black">City: {{ user.city }}</p>
-        <p style="color:black">Bio: {{ user.user_bio }}</p>
+        <p style="color:black">Bio: {{ user.user_bio }}</p> 
+        {% for language in languages %}
+          {% if language.lang_id==prac_lang_id %}
+            <p style="color:black">Language I'm learning: {{ language.lang_name }}</p>
+          {% endif %}
+        {% endfor %}
         <br>
         <a href="mailto:{{ user.email }}" class="btn btn-primary btn-md">Email {{ user.full_name.split(' ', 1)[0] }}</a>
 

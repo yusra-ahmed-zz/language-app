@@ -235,7 +235,10 @@ def show_user_page(user_id):
     """Show individual user's profile page"""
 
     user = User.query.get(user_id)
-    return render_template("user_page.html", user=user)
+    languages = Language.query.all()
+    prac_lang_id = user.practice_userlangs[0].lang_id
+    return render_template("user_page.html", user=user,
+                            prac_lang_id=prac_lang_id, languages=languages)
 
 
 @app.route('/user_profile_update', methods=['POST'])
