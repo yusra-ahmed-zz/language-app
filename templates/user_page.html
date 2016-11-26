@@ -11,15 +11,19 @@
 
     </section>
     <section class="col-xs-12 col-md-6">
-        <h2>{{ user.full_name }}</h2>
-        <p style="color:black">Age: {{ user.age }}</p>
-        <p style="color:black">City: {{ user.city }}</p>
-        <p style="color:black">Bio: {{ user.user_bio }}</p> 
+        <h1>{{ user.full_name }}</h1>
+        <p style="color:black"><strong>Age:</strong> {{ user.age }}</p>
+        <p style="color:black"><strong>City:</strong> {{ user.city }}</p>
+        <p style="color:black"><strong>Bio:</strong> {{ user.user_bio }}</p> 
         {% for language in languages %}
           {% if language.lang_id==prac_lang_id %}
-            <p style="color:black">Language I'm learning: {{ language.lang_name }}</p>
+            <p style="color:black"><strong>Language I'm learning:</strong> {{ language.lang_name }}</p>
+          {% endif %}
+          {% if language.lang_id==fluent_lang_id %}
+            <p style="color:black"><strong>Language I speak well:</strong> {{ language.lang_name }}</p>
           {% endif %}
         {% endfor %}
+
         <br>
         <a href="mailto:{{ user.email }}" class="btn btn-primary btn-md">Email {{ user.full_name.split(' ', 1)[0] }}</a>
 

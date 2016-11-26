@@ -11,9 +11,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
 
 {% include 'my_profile.html' %}
-<!-- <input type="search" name="search" id="search" placeholder="Search People">
-<button id="search-button" i class="glyphicon glyphicon-search"></button>
-<div id="placeholder"></div> -->
 
     <script>
 
@@ -45,7 +42,7 @@
         }
     }
     $("#search_input").on('keyup', getPeople);
-    // $("#search-button").on('click', getPeople);
+    $("#search-button").on('click', getPeople);
 
 
     </script>
@@ -91,7 +88,7 @@
             </section>
         </div>
             <div style="width:700px; display:inline">
-            <section class="col-xs-12 col-md-6 col-lg-6 main" id="main">
+            <section class="col-xs-12 col-md-6 col-lg-6 col-lg-offset-1 main" id="main">
                 <div id="user-output-area" box-sizing="border-box"></div><!-- Matched profiles appear here -->
             </section>
         </div>
