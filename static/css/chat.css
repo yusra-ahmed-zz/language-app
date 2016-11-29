@@ -43,14 +43,6 @@ input {
     resize: none;
 }
 
-a.transparent-input {
-   background-color: rgba(0, 0, 0, 0);
-   border-color: white;
-   color: white !important;
-   font-size: 14;
-   margin-bottom: 1%;
-}
-
 #world {
   position: fixed; 
   top: -50%; 
